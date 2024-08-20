@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "build/order";
+
+// 订单详情
+message OrderDetail {
+  // 订单详情id
+  string detailId = 1;  // @gotags: `gorm:"primary_key;<-:create"`
+  // 商品id
+  string productId = 2;  // @gotags: `gorm:"<-:create"`
+  // 分类id
+  string categoryId = 3;  // @gotags: `gorm:"<-:create"`
+  // 分类名称
+  string categoryName = 4;  // @gotags: `gorm:"-"`
+  // 商品名称
+  string productName = 5;  // @gotags: `gorm:"<-:create"`
+  // 商品简介
+  string introduction = 6;  // @gotags: `gorm:"<-:create"`
+  // 成本价
+  double price = 7;  // @gotags: `gorm:"<-:create"`
+  // 商品价格
+  double costPrice = 8;  // @gotags: `gorm:"<-:create"`
+  // 会员价格
+  double vipPrice = 9;  // @gotags: `gorm:"<-:create"`
+  // 市场价
+  double marketPrice = 10;  // @gotags: `gorm:"<-:create"`
+  // 商品图片
+  string image = 11;  // @gotags: `gorm:"<-:create"`
+  // 单位名
+  string unitName = 12;  // @gotags: `gorm:"<-:create"`
+  // 运费模板id
+  string tempId = 13;  // @gotags: `gorm:"<-:create"`
+  // 规格(0:单规格 1:多规格)
+  int64 specType = 14;  // @gotags: `gorm:"<-:create"`
+  // 是否虚拟商品(0:否 1:是)
+  int64 isVirtual = 15;
+  // 商户id(0为超级员创建 非0时为商户)
+  string merId = 16;  // @gotags: `gorm:"-"`
+  // 商户是否代理 0:不可代理 1:可代理)
+  int64 merUse = 17;  // @gotags: `gorm:"-"`
+  // 商品条码(条形码)
+  string barCode = 18;  // @gotags: `gorm:"-"`
+  // 是否优惠
+  int64 isBenefit = 19;  // @gotags: `gorm:"-"`
+  // 是否精品
+  int64 isBest = 20;  // @gotags: `gorm:"-"`
+  // 是否单独分佣
+  int64 isSub = 21;  // @gotags: `gorm:"-"`
+  // 商品二维码地址(用户小程序海报)
+  string codePath = 22;  // @gotags: `gorm:"-"`
+  // 预售结束后几天内发货
+  string presaleDay = 23;  // @gotags: `gorm:"-"`
+  // 物流方式
+  int64 logistics = 24;  // @gotags: `gorm:"-"`
+  // 运费设置
+  int64 freight = 25;  // @gotags: `gorm:"-"`
+  // 订单id
+  string orderId = 26;
+}

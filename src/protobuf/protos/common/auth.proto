@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+// 角色和菜单的关系
+message RoleMenu {
+  // 角色id
+  string roleId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 菜单id
+  string menuId = 2;
+  // 删除状态
+  bool delStatus = 3;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 4;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 5;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 6;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 7;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+// 用户关联角色
+message UserRole {
+  // 角色id
+  string roleId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 用户id
+  string userId = 2;
+  // 用户id
+  string appId = 3;
+  // 删除状态
+  bool delStatus = 4;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 5;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 6;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 7;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 8;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+// 角色和功能的关系
+message RoleFunc {
+  // 角色id
+  string roleId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 功能id
+  string funcId = 2;
+  // 删除状态
+  bool delStatus = 3;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 4;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 5;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 6;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 7;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+// 返回结果
+message AuthResponse {
+  // 获取数据数量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 用户id列表
+  repeated string userIds = 3;
+  // 角色id列表
+  repeated string roleIds = 4;
+}
+
+// 色关联菜单列表
+message RoleMenuList {
+  repeated RoleMenu list = 1;
+}
+
+// 角色与用户关联列表
+message UserRoleList {
+  repeated UserRole list = 1;
+}
+
+// 角色与功能关联列表
+message RoleFuncList {
+  repeated RoleFunc list = 1;
+}
+
+service Auth {
+  // 新增角色关联菜单数据
+  rpc CreateRoleMenu(RoleMenuList) returns (AuthResponse);
+
+  // 创建角色与用户关联
+  rpc CreateUserRole(UserRoleList) returns (AuthResponse);
+
+  // 创建角色与功能关联
+  rpc CreateRoleFunc(RoleFuncList) returns (AuthResponse);
+
+  // 用户获取token数据处理
+  rpc GetToken(global.Auth) returns (AuthResponse);
+};

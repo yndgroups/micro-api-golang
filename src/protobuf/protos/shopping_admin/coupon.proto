@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message Coupon {
+  // 优惠券id
+  string couponId = 1;
+  // 名称
+  string title = 2;
+  // 优惠券图片
+  string image = 3;
+  // 领取数量
+  int64 TotalCount = 4;
+  // 剩余领取数量
+  int64 RemainCount = 5;
+  // 是否无限张数(0:否 1:是)
+  int64 isPermanent = 6;
+  // 状态(1:未开启 2:正常 3:无效)
+  int64 status = 7;
+  // 是否首次关注赠送(0:否[默认]1:是)
+  int64 isGiveSubscribe = 8;
+  // 是否满赠(0:否[默认] 1:是)
+  int64 isFullGive = 9;
+  // 消费满多少赠送
+  double fullReduction = 10;
+  // 兑换消耗积分值
+  int64 integral = 11;
+  // 兑换的优惠券面值
+  double couponPrice = 12;
+  // 最低消费多少金额可用优惠券
+  double UseMinPrice = 14;
+  // 优惠券有效期限（单位：天）
+  int64 couponTime = 15;
+  // 所属商品id(单品)
+  string productId = 16;
+  // 分类id(类目)
+  string categoryId = 17;
+  // 类型(1:类目 2:指定商品 3:单品 4:全品 )
+  int64 type = 18;
+  // 领取开始时间
+  string receiveStartTime = 19;
+  // 领取结束时间
+  string receiveEndTime = 20;
+  // 领取门槛(1:普通 2:新人 3:首单 4:指定用户[会员券])
+  int64 receiveThreshold = 21;
+  // 领取方式(1:手动领取 2:自动发放)
+  int64 receiveWays = 22;
+  // 使用开始时间
+  string startUseTime = 23;
+  // 使用结束时间
+  string endUseTime = 24;
+  // 排序
+  int64 sortBy = 25;
+  // 删除状态
+  bool delStatus = 26;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 27;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 28;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 29;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 30;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message CouponParam {
+}
+
+message CouponIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message CouponPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  CouponParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+message CouponDetailVo {
+}
+
+// 返回结果
+message CouponResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Coupon detail = 3;  // 详情
+  repeated Coupon list = 4;  // 列表
+}
+
+// 业务实现
+service CouponService {
+  // 新增
+  rpc Create(Coupon) returns (CouponResponse);
+
+  // 修改
+  rpc Update(Coupon) returns (CouponResponse);
+
+  // 删除
+  rpc Delete(CouponIds) returns (CouponResponse);
+
+  // 查询 详情
+  rpc FindById(CouponIds) returns (CouponResponse);
+
+  // 查询 分页
+  rpc FindPageList(CouponPageAuthQuery) returns (CouponResponse);
+}

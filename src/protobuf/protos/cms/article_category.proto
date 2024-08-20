@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package cms;
+
+option go_package = "build/cms";
+import "protos/global/global.proto";
+
+
+message ArticleCategory {
+  // 分类id
+  string categoryId = 1; // @gotags: gorm:"primary_key;<-:create"
+  // 父id
+  string pid = 2; // @gotags: gorm:"<-:create"
+  // 标题
+  string title = 3; // @gotags: gorm:"<-" validate:"required"
+  // 介绍
+  string introduction = 4; // @gotags: gorm:"->;<-:update"
+  // 图标
+  string icon = 5; // @gotags: gorm:"->;<-:update"
+  // 状态
+  int64 status = 6; // @gotags: gorm:"->;<-:update"
+  // 排序
+  int64 sortBy = 7; // @gotags: gorm:"->;<-:update"
+  // 删除状态
+  bool delStatus = 8; // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 9; // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string  updateBy = 10; // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string  createTime = 11; // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 12; // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message ArticleCategoryParam {
+
+}
+
+message ArticleCategoryIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message ArticleCategoryPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  ArticleCategoryParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4; // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message ArticleCategoryResponse {
+  int64 count = 1; // 获取数据数量
+  string Msg = 2; // 错误信息
+  ArticleCategory detail = 3; // 详情
+  repeated ArticleCategory list = 4; // 列表
+}
+
+// 业务实现
+service ArticleCategoryService {
+
+  // 新增
+  rpc Create (ArticleCategory) returns (ArticleCategoryResponse);
+
+  // 修改
+  rpc Update (ArticleCategory) returns (ArticleCategoryResponse);
+
+  // 删除
+  rpc Delete (ArticleCategoryIds) returns (ArticleCategoryResponse);
+
+  // 查询 详情
+  rpc FindById (ArticleCategoryIds) returns (ArticleCategoryResponse);
+
+  // 查询 分页
+  rpc FindPageList (ArticleCategoryPageAuthQuery) returns (ArticleCategoryResponse);
+
+}

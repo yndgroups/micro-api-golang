@@ -1,0 +1,24 @@
+application:
+  name: order-provider
+  port: 8089
+
+# logs
+zap:
+  log-dir: ./tmp/logs/
+  log-level: DebugLevel
+
+# ncaos
+nacos:
+  username: nacos
+  password: Nacos@2023!#@npwl
+  config:
+    group: ynd_test
+    server-addr: test.npwl.shop
+    port: 8848
+    namespace: f39245a9-a438-42be-b9c0-4c7bc202ec43
+    prefix: order-provider
+    data-id: order-provider
+    file-extension: json
+  log-dir: ./tmp/nacos/
+  log-level: warn
+  cache-dir: ./tmp/nacos/cache

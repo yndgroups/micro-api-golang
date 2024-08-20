@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package shopping_client;
+
+option go_package = "build/shopping_client";
+
+message Store {
+  // 商店id
+  string storeId = 1;  // @gotags: `gorm:"primary_key;<-:create"`
+  // 店铺分类
+  string storeCategoryId = 2;  // @gotags: `gorm:"<-" validate:"required"`
+  // 店铺名称
+  string name = 3;  // @gotags: `gorm:"<-" validate:"required"`
+  // logo
+  string logo = 4;  // @gotags: `gorm:"<-" validate:"required"`
+  // 搜索关键词
+  string keyword = 5;  // @gotags: `gorm:"<-" validate:"required"`
+  // 店铺简介
+  string introduction = 6;  // @gotags: `gorm:"<-" validate:"required"`
+  // 店铺地址
+  string address = 7;  // @gotags: `gorm:"<-" validate:"required"`
+  // 手机号码
+  string mobile = 8;  // @gotags: `gorm:"<-" validate:"required" `
+  // 座机号码
+  string phone = 9;  // @gotags: `gorm:"<-" validate:"required"`
+  // 联系邮箱
+  string email = 10;  // @gotags: `gorm:"<-" validate:"required"`
+  // 状态(1:启用[默认] 0：禁用)
+  int64 status = 11;  // @gotags: `gorm:"<-"`
+  // 邮编
+  string zipCode = 12;  // @gotags: `gorm:"<-"`
+  // 门店推荐图
+  string RecommendImage = 13;  // @gotags: `gorm:"<-"`
+  // 纬度
+  string lat = 14;  // @gotags: `gorm:"<-"`
+  // 经度
+  string lon = 15;  // @gotags: `gorm:"<-"`
+  // 到期店铺日期
+  string endDate = 16;  // @gotags: `gorm:"<-"`
+  // 核销时间
+  string VerificationTime = 17;  // @gotags:  `gorm:"<-"`
+  // 营业开始时间
+  string businessStartTime = 18;  // @gotags: `gorm:"<-" validate:"required"`
+  // 营业结束时间
+  string businessEndTime = 19;  // @gotags: `gorm:"<-" validate:"required"`
+  // 已付保证金
+  double bailPaid = 20;  // @gotags: `gorm:"-" swaggerignore:"true"`
+  // 店铺等级
+  int64 storeRankId = 21;  // @gotags: `gorm:"-" swaggerignore:"true"`
+  // 商家
+  string businessId = 22;  // @gotags: `gorm:"<-" swaggerignore:"true"`
+  // 门店编码
+  string storeNo = 23;  // @gotags: `gorm:"<-" swaggerignore:"true"`
+  // 删除状态
+  bool delStatus = 24;  // @gotags: `gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"`
+  // 创建人
+  string createBy = 25;  // @gotags: `gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 修改人
+  string updateBy = 26;  // @gotags: `gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 创建时间
+  string createTime = 27;  // @gotags: `gorm:"->" swaggerignore:"true"`
+  // 修改时间
+  string updateTime = 28;  // @gotags: `gorm:"->" swaggerignore:"true"`
+}
+
+service StoreService {
+}

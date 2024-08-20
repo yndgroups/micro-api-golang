@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package global;
+
+option go_package = "protobuf/build/global";
+
+// Empty 空参数
+message Empty {}
+
+// 公共参数
+message BaseModel {
+  // 删除状态
+  bool delStatus = 8;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 9;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 10;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 11;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 17;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+// 授权参数
+message Auth {
+  // 用户id
+  string userId = 1;
+  // 用户类型
+  string roleId = 2;
+  // 用户类型
+  int64 userType = 3;
+  // 应用id
+  string appId = 4;
+  // 部门id
+  string deptId = 5;
+}
+
+// 商品下单查询参数
+message ProductParam {
+  // 商品id
+  string productId = 1;  // @gotags: `validate:"required"`
+  // 购买数量
+  int64 quantity = 2;  // @gotags: `validate:"required"`
+  // 单规格还是多规格`
+  int64 specType = 3;  // @gotags:  `validate:"required"`
+  // 优惠券id
+  string couponId = 5;
+}
+
+// 商品扩展参数
+message ProductExpand {
+  // 商品id
+  string productId = 1;
+  // SkuId
+  string skuId = 2;
+  // 分类id
+  string categoryId = 3;
+  // 商品名称
+  string productName = 4;
+  // 关键字
+  string keyword = 5;
+  // 商品简介
+  string introduction = 6;
+  // 商品价格(单规格时必填)
+  double price = 7;
+  // 成本价(单规格时必填)
+  double costPrice = 8;
+  // 会员价格(单规格时必填)
+  double vipPrice = 9;
+  // 市场价(单规格时必填)
+  double MarketPrice = 10;
+  // 商品图片
+  string image = 11;
+  // 轮播图
+  string sliderImage = 12;
+  // 推荐图
+  string recommendImage = 13;
+  // 库存
+  int64 stock = 14;
+  // 库存预警
+  int64 stockWarning = 15;
+  // 单位
+  string unitName = 16;
+  // 运费模板ID
+  string tempId = 17;
+  // 规格(0:单 1:多)
+  int64 specType = 18;
+  // 规格名称
+  string specTypeName = 19;
+  // 上架状态（0：未上架，1：上架）
+  int64 isDisplay = 20;
+  // 上架状态名称
+  string isDisplayName = 21;
+  // 商品是否是虚拟商品(0:否 1：是)
+  int64 isVirtual = 22;
+  // 商品是否是虚拟商品名称
+  string isVirtualName = 23;
+  // 虚拟商品类型
+  int64 virtualType = 24;
+  // 虚拟销量
+  int64 virtualSales = 25;  // @gotags: swaggerignore:"true"`
+  // 是否开启限购(0:否 1:是)
+  int64 isLimit = 26;
+  // 是否开启限购名称
+  string isLimitName = 27;
+  // 限购类型(1:单次限购 2:永久限购)
+  int64 limitType = 28;
+  // 限购类型名称
+  string limitTypeName = 29;
+  // 限购数量
+  int64 limitNum = 30;
+  // 商品详情
+  string content = 31;
+}

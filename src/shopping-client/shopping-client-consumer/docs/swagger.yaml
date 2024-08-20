@@ -1,0 +1,1061 @@
+basePath: /api/shopping/client
+definitions:
+  Request-shopping_client_BusinessCircleParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/shopping_client.BusinessCircleParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-shopping_client_BusinessFranchiseeParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/shopping_client.BusinessFranchiseeParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-shopping_client_BusinessParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/shopping_client.BusinessParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-shopping_client_BusinessStoreParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/shopping_client.BusinessStoreParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Response:
+    properties:
+      code:
+        default: 0
+        description: 结果状态码
+        type: integer
+      data:
+        description: 结果
+      msg:
+        default: 请求失败
+        description: 状态信息
+        type: string
+    type: object
+  shopping_client.Business:
+    type: object
+  shopping_client.BusinessCircleParam:
+    type: object
+  shopping_client.BusinessFranchisee:
+    type: object
+  shopping_client.BusinessFranchiseeParam:
+    type: object
+  shopping_client.BusinessParam:
+    type: object
+  shopping_client.BusinessStoreParam:
+    type: object
+  shopping_client.Cart:
+    properties:
+      bargainId:
+        description: 砍价id
+        type: string
+      cartId:
+        description: 购物车id
+        type: string
+      groupBuyId:
+        description: 拼团id
+        type: string
+      image:
+        description: 商品图片
+        type: string
+      presaleId:
+        description: 预售商品id
+        type: string
+      productAttrUnique:
+        description: 商品属性
+        type: string
+      productId:
+        description: 商品id
+        type: string
+      quantity:
+        description: 商品数量
+        type: integer
+      seckillId:
+        description: 秒杀商品id
+        type: string
+      specType:
+        description: 规格(1:单规格 2:多规格)
+        type: integer
+      status:
+        description: 状态
+        type: integer
+    required:
+    - image
+    - productAttrUnique
+    - productId
+    - quantity
+    - specType
+    type: object
+  shopping_client.CartPageAuthQuery:
+    properties:
+      pageIndex:
+        default: 1
+        description: 分页索引
+        type: integer
+      pageSize:
+        default: 10
+        description: 分页长度
+        type: integer
+    type: object
+  shopping_client.ProductPageAuthQuery:
+    properties:
+      pageIndex:
+        description: 分页索引
+        type: integer
+      pageSize:
+        description: 分页长度
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/shopping_client.ProductPageAuthQuery_QueryParams'
+        description: 查询参数
+    type: object
+  shopping_client.ProductPageAuthQuery_QueryParams:
+    properties:
+      keyword:
+        description: 关键词
+        type: string
+      productName:
+        description: 商品名称
+        type: string
+    type: object
+info:
+  contact:
+    email: 826422592@qq.com
+    name: 杨大琼
+    url: http://localhost
+  description: swagger go API文档
+  license:
+    name: Apache 2.0
+  title: 客户端接口文档
+paths:
+  /ad/findById/{id}:
+    get:
+      description: 根据id查询广告内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 广告id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询广告内容详情
+      tags:
+      - 广告管理
+  /ad/findList/{type}/{position}:
+    get:
+      description: 主要用于获取广告信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 广告类型[1:轮播图广告,2:单张图片]
+        in: path
+        name: type
+        required: true
+        type: string
+      - description: 广告位置[1:首页,2:列表,3:详情页]
+        in: path
+        name: position
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 获取广告信息
+      tags:
+      - 广告管理
+  /business:
+    delete:
+      description: 主要用于商家删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除商家
+      tags:
+      - 商家管理
+    post:
+      description: 主要用于商家新增
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 新增商家参数
+        in: body
+        name: business
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.Business'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 创建商家
+      tags:
+      - 商家管理
+    put:
+      description: 主要用于商家修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 修改商家参数
+        in: body
+        name: business
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.Business'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改商家
+      tags:
+      - 商家管理
+  /business/findById/{id}:
+    get:
+      description: 根据id查询商家内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商家id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询商家内容详情
+      tags:
+      - 商家管理
+  /business/findPageList:
+    post:
+      description: 主要用于查询商家分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-shopping_client_BusinessParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商家分页列表
+      tags:
+      - 商家管理
+  /businessCircle:
+    delete:
+      description: 主要用于商圈删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商圈是删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除商圈
+      tags:
+      - 商圈管理
+  /businessCircle/findById/{id}:
+    get:
+      description: 根据id查询商圈内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商圈id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询商圈内容详情
+      tags:
+      - 商圈管理
+  /businessCircle/findPageList:
+    post:
+      description: 主要用于查询商圈分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-shopping_client_BusinessCircleParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商圈分页列表
+      tags:
+      - 商圈管理
+  /businessStore:
+    delete:
+      description: 主要用于商家门店删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商家门店是删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除商家门店
+      tags:
+      - 商家门店管理
+  /businessStore/findById/{id}:
+    get:
+      description: 根据id查询商家门店内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商家门店id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询商家门店内容详情
+      tags:
+      - 商家门店管理
+  /businessStore/findPageList:
+    post:
+      description: 主要用于查询商家门店分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-shopping_client_BusinessStoreParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商家门店分页列表
+      tags:
+      - 商家门店管理
+  /cart/add:
+    post:
+      description: 主要用于查看购物车列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 添加参数
+        in: body
+        name: addCartParam
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.Cart'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 购物车列表
+      tags:
+      - 购物车
+  /cart/changeQuantity/{cartId}/{quantity}:
+    get:
+      description: 主要用于修改购物车数量
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 购物车id
+        in: path
+        name: cartId
+        required: true
+        type: string
+      - description: 商品数量id
+        in: path
+        name: quantity
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改购物车数量
+      tags:
+      - 购物车
+  /cart/delete:
+    delete:
+      description: 主要用于购物车商品删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据商品id购删除购物车商品
+      tags:
+      - 购物车
+  /cart/findCount:
+    get:
+      description: 主要用于查询用户的购物车数量
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询用户的购物车数量
+      tags:
+      - 购物车
+  /cart/findPageList:
+    post:
+      description: 主要用于查看购物车列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.CartPageAuthQuery'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 购物车列表
+      tags:
+      - 购物车
+  /franchisee:
+    delete:
+      description: 主要用于商家入住删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除商家入住
+      tags:
+      - 商家入住管理
+    post:
+      description: 主要用于商家入住新增
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 新增商家入住参数
+        in: body
+        name: franchisee
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.BusinessFranchisee'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 创建商家入住
+      tags:
+      - 商家入住管理
+    put:
+      description: 主要用于商家入住修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 修改商家入住参数
+        in: body
+        name: franchisee
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.BusinessFranchisee'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改商家入住
+      tags:
+      - 商家入住管理
+  /franchisee/findById/{id}:
+    get:
+      description: 根据id查询商家入住内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商家入住id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询商家入住内容详情
+      tags:
+      - 商家入住管理
+  /franchisee/findPageList:
+    post:
+      description: 主要用于查询商家入住分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-shopping_client_BusinessFranchiseeParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商家入住分页列表
+      tags:
+      - 商家入住管理
+  /product/categoryByParentId/{parentId}:
+    get:
+      description: 主要用于根据商品父id查询下级分类
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 分类父id
+        in: path
+        name: parentId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据商品父id查询下级分类
+      tags:
+      - 商品接口
+  /product/categoryTreeByParentId/{parentId}:
+    get:
+      description: 主要用于根据商品父id查询所有子分类
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 分类父id
+        in: path
+        name: parentId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据商品父id查询所有子分类【树形结构】
+      tags:
+      - 商品接口
+  /product/findById/{productId}:
+    get:
+      description: 主要用于商品详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 商品id
+        in: path
+        name: productId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商品详情
+      tags:
+      - 商品接口
+  /product/findPageList:
+    post:
+      description: 主要用于商品分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/shopping_client.ProductPageAuthQuery'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 商品分页列表
+      tags:
+      - 商品接口
+swagger: "2.0"

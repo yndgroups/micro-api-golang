@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message BusinessFranchisee {
+  // 删除状态
+  bool delStatus = 1;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 2;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 3;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 4;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 5;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message BusinessFranchiseeParam { }
+
+message BusinessFranchiseeIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message BusinessFranchiseePageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  BusinessFranchiseeParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message BusinessFranchiseeResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  BusinessFranchisee detail = 3;  // 详情
+  repeated BusinessFranchisee list = 4;  // 列表
+}
+
+// 业务实现
+service BusinessFranchiseeService {
+  // 新增
+  rpc Create(BusinessFranchisee) returns (BusinessFranchiseeResponse);
+
+  // 修改
+  rpc Update(BusinessFranchisee) returns (BusinessFranchiseeResponse);
+
+  // 删除
+  rpc Delete(BusinessFranchiseeIds) returns (BusinessFranchiseeResponse);
+
+  // 查询 详情
+  rpc FindById(BusinessFranchiseeIds) returns (BusinessFranchiseeResponse);
+
+  // 查询 分页
+  rpc FindPageList(BusinessFranchiseePageAuthQuery) returns (BusinessFranchiseeResponse);
+}
+
+// // BusinessFranchisee 商家加盟
+// type BusinessFranchisee struct {
+// 	cmodel.BaseModel
+// 	// 加盟id
+// 	FranchiseeId string `gorm:"primary_key;<-:create" validate:"required"
+// json:"franchiseeId"`
+// 	// 用户id
+// 	UserId string `json:"userId"`
+// 	// 商家名称
+// 	BusinessName string `validate:"required" json:"businessName"`
+// 	// 姓名
+// 	Name string `validate:"required" json:"name"`
+// 	// 电话
+// 	Telephone string `validate:"required" json:"telephone"`
+// 	// 所在地区
+// 	Region string `validate:"required" json:"region"`
+// 	// 详细地址
+// 	Address string `validate:"required" json:"address"`
+// 	// 商家资质
+// 	QualifiedImg string `validate:"required" json:"qualifiedImg"`
+// 	// 状态(0:待审核[默认] 1:通过 2:拒绝)
+// 	Status int `gorm:"<-:update" minimum:"0" maximum:"2" default:"0"
+// json:"status" swaggerignore:"true"`
+// 	// 拒绝原因
+// 	Reason string `gorm:"<-:update" json:"reason"`
+// 	// 平台应用id
+// 	PlatformAppId string ` json:"platformAppId"`
+// 	// 渠道
+// 	Channel string `json:"channel"`
+// 	// 所属代理商id
+// 	Aid string ` json:"aid"`
+// 	// 业务员id
+// 	SalesmanId string ` json:"salesmanId"`
+// 	// 合伙人id
+// 	PartnerId string ` json:"partnerId"`
+// 	// 合伙人审核状态(0:待审核[默认] 1:通过)
+// 	PartnerStatus string `gorm:"->;<-:create" json:"partnerStatus"`
+// }
+
+// type BusinessFranchiseeParam struct {
+// 	// 姓名
+// 	Name string `json:"name"`
+// }
+
+// type BusinessFranchiseeListVo struct {
+// 	// 商家名称
+// 	BusinessName string `json:"businessName"`
+// 	// 姓名
+// 	Name string `json:"name"`
+// 	// 电话
+// 	Telephone string `json:"telephone"`
+// 	// 所在地区
+// 	Region string `json:"region"`
+// 	// 详细地址
+// 	Address string `json:"address"`
+// 	// 商家资质
+// 	QualifiedImg string `json:"qualifiedImg"`
+// 	// 状态(0:待审核[默认] 1:通过 2:拒绝)
+// 	Status int ` json:"status"`
+// 	// 状态(0:待审核[默认] 1:通过 2:拒绝)
+// 	StatusName string ` json:"statusName"`
+// 	// 申请时间
+// 	CreateTime cmodel.LocalDate `json:"createTime"`
+// }
+
+// type BusinessFranchiseeDetailVo struct {
+// }

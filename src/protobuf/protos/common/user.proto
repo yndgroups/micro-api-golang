@@ -1,0 +1,211 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+import "protos/common/role.proto";
+
+message User {
+  // 用户id
+  string userId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 用户名
+  string userName = 2;  // @gotags gorm:"<-"
+  // 用户密码
+  string userPassword = 3;  // @gotags gorm:"<-"
+  // 加密盐
+  string salt = 4;  // @gotags gorm:"<-"
+  // 用户电话
+  string phone = 5;
+  // 用户邮箱登录
+  string email = 6;
+  // 微信OpenId
+  string openId = 7;
+  // 禁用原因
+  string reasonsProhibition = 8;
+  // 帐号类型（1：个人账户，2：企业）
+  int64 accountType = 9;
+  // 状态(1:启用(审核通过)[默认] 2:禁用 3:待审核)
+  int64 status = 10;
+  // 来源分类(1:后台端 2:前端 3: 微信公众号 4:微信小程序）
+  int64 regType = 11;
+  // 帐号来源某个应用的appId
+  string sourceId = 12;
+  // 创建人
+  string createBy = 13;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 14;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+}
+
+// 授权参数
+message PowerParma {
+  // 角色id
+  string roleId = 5;
+  // 应用id
+  string appId = 6;
+}
+
+message CreateUserDTO {
+  User user = 1;
+  PowerParma powerParma = 2;
+}
+
+// 用户id集合
+message UserIds {
+  // 用户id
+  repeated string userId = 1;
+  // 操作人id
+  string operatorUserid = 2;
+}
+
+// UserParams 查询条件
+message UserParam {
+  // 用户名
+  string userName = 1;
+  // 电话号码
+  string phone = 2;
+  // 邮箱
+  string email = 3;
+  // 注册类型 1:后台端 2:前端 3: 微信公众号 4:微信小程序
+  int64 regType = 4;
+  // openId
+  string openId = 5;
+  // 应用id
+  string appId = 6;
+  // 用户id
+  string userId = 7;
+}
+
+// @name test
+message UserPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;  // @gotags: validate:"required,min=1" example:"1"
+  // 分页长度
+  int64 pageSize = 2;  // @gotags:  validate:"required,min=10,max=100" example:"10"
+  // 查询参数
+  UserParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}  // @gotags: swaggerignore:"true"`
+
+// 用户列表信息
+message UserListVo {
+  // 用户id
+  string userId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 用户名
+  string userName = 2;  // @gotags gorm:"<-"
+  // 加密盐
+  string salt = 4;  // @gotags gorm:"<-"
+  // 用户电话
+  string phone = 5;
+  // 用户邮箱登录
+  string email = 6;
+  // 微信OpenId
+  string openId = 7;
+  // 禁用原因
+  string reasonsProhibition = 8;
+  // 账号类型
+  int64 accountType = 9;
+  // 账号状态
+  int64 status = 10;
+  // 帐号来源分类（1：后台端：2前端：3: 微信）
+  int64 regType = 11;
+  // 帐号来源某个应用的appId
+  string sourceId = 12;
+  // 删除状态
+  bool delStatus = 13;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 14;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 15;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 16;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 17;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 存储菜单权限值
+  string authorizedValue = 18;  // @gotags: gorm:"-"
+}
+
+// 用户详情
+message UserBaseDetail {
+  // 用户id
+  string userId = 1;
+  // 用户名
+  string userName = 2;
+  // 用户密码
+  string userPassword = 3;
+  // 加密盐
+  string salt = 4;
+  // 用户电话
+  string phone = 5;
+  // 用户邮箱登录
+  string email = 6;
+  // 微信OpenId
+  string openId = 7;
+  // 禁用原因
+  string reasonsProhibition = 8;
+  // 帐号类型（1：个人账户，2：企业）
+  int64 accountType = 9;
+  // 状态(1:启用(审核通过)[默认] 2:禁用 3:待审核)
+  int64 status = 10;
+  // 来源分类(1:后台端 2:前端 3: 微信公众号 4:微信小程序）
+  int64 regType = 11;
+  // 帐号来源某个应用的appId
+  string sourceId = 12;
+  // 删除状态
+  bool delStatus = 13;
+  // 创建人
+  string createBy = 14;
+  // 修改人
+  string updateBy = 15;
+  // 创建时间
+  string createTime = 16;
+  // 修改时间
+  string updateTime = 19;
+  // 角色唯一标识
+  string uniqueIdentification = 20;
+}
+
+// 用户数据
+message UserResponse {
+  // 数据量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 详情
+  UserBaseDetail detail = 3;
+  // 列表
+  repeated UserListVo list = 4;
+  // 角色列表
+  repeated Role roles = 5;
+  // 角色相关权限值
+  string powerSign = 6;
+  // 用户余额
+  string balance = 7;
+}
+
+service UserService {
+  // 新增用户信息
+  rpc Create(CreateUserDTO) returns (UserResponse);
+
+  // 修改用户信息
+  rpc Update(User) returns (UserResponse);
+
+  // 删除用户信息
+  rpc Delete(UserIds) returns (UserResponse);
+
+  // 查询用户详情
+  rpc FindById(UserIds) returns (UserResponse);
+
+  // 查询用户余额
+  rpc FindBalance(UserIds) returns (UserResponse);
+
+  // 查询用户分页信息
+  rpc FindPageList(UserPageAuthQuery) returns (UserResponse);
+
+  // 查询用户信息
+  rpc FindByUserParam(UserParam) returns (UserResponse);
+
+  // 查询用户权限
+  rpc FindPermissions(UserParam) returns (UserResponse);
+}

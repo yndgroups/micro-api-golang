@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package shopping_client;
+
+option go_package = "build/shopping_client";
+import "protos/global/global.proto";
+
+message ProductCategory {
+  // 商品分类id
+  string categoryId = 1;
+  // 上级分类
+  string parentId = 2;
+  // 名称
+  string name = 3;
+  // 自营店铺分佣比例
+  double selfRate = 4;
+  // 普通店铺分佣比例
+  double profitSharing = 5;
+  // 排序
+  int64 sortBy = 6;
+  // 删除状态
+  bool delStatus = 7;
+  // 创建人
+  string createBy = 8;
+  // 修改人
+  string updateBy = 9;
+  // 创建时间
+  string createTime = 10;
+  // 修改时间
+  string updateTime = 11;
+}
+
+// 分类列表
+message ProductCategoryTreeList {
+  // 商品分类id
+  string categoryId = 1;
+  // 上级分类
+  string parentId = 2;
+  // 名称
+  string name = 3;
+  // 自营店铺分佣比例
+  double selfRate = 4;
+  // 普通店铺分佣比例
+  double profitSharing = 5;
+  // 排序
+  int64 sortBy = 6;
+  // 删除状态
+  bool delStatus = 7;
+  // 创建人
+  string createBy = 8;
+  // 修改人
+  string updateBy = 9;
+  // 创建时间
+  string createTime = 10;
+  // 修改时间
+  string updateTime = 11;
+  // 子集分类
+  repeated ProductCategoryTreeList children = 13;  // @gotags: gorm:"-"
+}
+
+message ProductCategoryParams {
+  // 父级id
+  string parentId = 1;
+  // 类型
+  string type = 2;
+  // 店铺id
+  string storeId = 3;
+}
+
+// 授权参数(系统内部使用,为了安全不对前端进行参数传递)
+message ProductCategoryAuthParams {
+  string id = 1;
+  // id集合
+  repeated string ids = 2;
+  // 父id
+  string parentId = 3;
+  // 用户信息
+  global.Auth auth = 4;
+}
+
+// 返回结果
+message ProductCategoryResponse {
+  // 获取数据数量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 详情
+  ProductCategory detail = 3;
+  // 列表
+  repeated ProductCategory list = 4;
+  // 树形列表
+  repeated ProductCategoryTreeList treeList = 5;
+}
+
+// 业务实现
+service ProductCategoryService {
+  // 查询 详情
+  rpc FindByParentId(ProductCategoryAuthParams) returns (ProductCategoryResponse);
+
+  // 查询 分页
+  rpc FindTreeByParentId(ProductCategoryAuthParams) returns (ProductCategoryResponse);
+}

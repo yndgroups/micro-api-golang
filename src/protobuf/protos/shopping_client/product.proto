@@ -1,0 +1,354 @@
+syntax = "proto3";
+
+package shopping;
+
+option go_package = "build/shopping_client";
+
+import "protos/global/global.proto";
+
+// Product 产品
+message ProductListVo {
+  // 商品id
+  string productId = 1;  // @gotags: `gorm:"primary_key;<-:create;column:product_id"`
+  // 分类id
+  string categoryId = 2;  // @gotags: `validate:"required" gorm:"<-;column:category_id"`
+  // 商品名称
+  string productName = 3;  // @gotags: `validate:"required"  gorm:"<-;column:product_name"`
+  // 关键字
+  string keyword = 4;  // @gotags: `validate:"required" gorm:"<-;column:keyword"`
+  // 商品简介
+  string introduction = 5;  // @gotags: `validate:"required" gorm:"<-;column:introduction"`
+  // 商品价格(单规格时必填)
+  double price = 6;  // @gotags: gorm:"<-;column:price"`
+  // 成本价(单规格时必填)
+  double costPrice = 7;  // @gotags: gorm:"<-;column:cost_price"`
+  // 会员价格(单规格时必填)
+  double vipPrice = 8;  // @gotags: gorm:"<-;column:vip_price"`
+  // 市场价(单规格时必填)
+  double marketPrice = 9;  // @gotags:  gorm:"<-;column:market_price"`
+  // 商品图片
+  string image = 10;  // @gotags: `validate:"required" gorm:"<-;column:image"`
+  // 轮播图
+  string sliderImage = 11;  // @gotags:`validate:"required" gorm:"<-;column:slider_image"`
+  // 推荐图
+  string recommendImage = 12;  // @gotags: `validate:"required" json:"recommendImage" gorm:"<-;column:recommend_image"`
+  // 库存
+  uint64 stock = 13;  // @gotags:`validate:"required" json:"stock" gorm:"<-;column:stock"`
+  // 库存预警
+  uint64 stockWarning = 14;  // @gotags: `validate:"required" json:"stockWarning" gorm:"<-;column:stock_warning"`
+  // 单位
+  string unitName = 15;  // @gotags:`validate:"required" json:"unitName" gorm:"<-;column:unit_name"`
+  // 运费模板ID
+  string freightTempId = 16;  // @gotags: `validate:"required" json:"tempId" gorm:"<-;column:temp_id"`
+  // 规格(0:单 1:多)
+  int64 specType = 17;  // @gotags:`validate:"required" json:"specType" gorm:"<-;column:spec_type"`
+  // 上架状态（0：未上架，1：上架）
+  int64 isDisplay = 18;  // @gotags: `validate:"required" json:"isDisplay" gorm:"<-;column:is_display"`
+  // 商品是否是虚拟商品
+  int64 isVirtual = 19;  // @gotags:`validate:"required" json:"isVirtual" gorm:"<-;column:is_virtual"`
+  // 品牌id
+  string brandId = 20;  // @gotags:`json:"brandId" gorm:"<-;column:brand_id"`
+  // 虚拟商品类型
+  int64 virtualType = 21;  // @gotags: `json:"virtualType" gorm:"<-;column:virtual_type"`
+  // 虚拟销量
+  int64 virtualSales = 22;  // @gotags:`json:"virtualSales"  swaggerignore:"true" gorm:"<-;column:virtual_sales"`
+  // 是否开启限购
+  int64 isLimit = 23;  // @gotags: `validate:"required" json:"isLimit" gorm:"<-;column:is_limit"`
+  // 限购类型(1:单次限购 2:永久限购)
+  int64 limitType = 24;  // @gotags:`json:"limitType" gorm:"<-;column:limit_type"`
+  // 限购数量
+  int64 limitNum = 25;  // @gotags: 7`json:"limitNum" gorm:"<-;column:limit_num"`
+  // 商品详情
+  string content = 26;  // @gotags:`validate:"required" json:"content" gorm:"-"`
+  // 商品唯一编号
+  string sn = 27;  // @gotags: gorm:"<-;column:sn"`
+  // 浏览量
+  int64 views = 28;  // @gotags: swaggerignore:"true" gorm:"-"`
+  // 商品条码（条形码）
+  string barCode = 29;  // @gotags: gorm:"<-;column:bar_code"`
+  // 商户id(0为超级员创建 非0时为商户)
+  int64 merId = 30;  // @gotags: gorm:"<-;column:mer_id"`
+  // 销量
+  int64 sales = 31;  // @gotags:  swaggerignore:"true" gorm:"-"`
+  // 是否热卖
+  int64 isHot = 32;  // @gotags: `swaggerignore:"true" gorm:"<-;column:is_host"`
+  // 是否优惠
+  int64 isBenefit = 33;  // @gotags: gorm:"<-;column:is_benefit"`
+  // 是否精品
+  int64 isBest = 34;  // @gotags: gorm:"<-;column:is_best"`
+  // 是否新品
+  int64 isNew = 35;  // @gotags: gorm:"<-;column:is_new"`
+  // 商户是否代理(0:不可代理 1:可代理)
+  int64 merUse = 36;  // @gotags: gorm:"<-;column:mer_use"`
+  // 获得积分
+  int64 giveIntegral = 37;  // @gotags: gorm:"<-;column:give_integral"`
+  // 秒杀状态(0:未开启 1:已开启)
+  int64 isSeckill = 38;  // @gotags: gorm:"<-;column:is_seckill"`
+  // 砍价状态(0:未开启 1:开启)
+  int64 isBargain = 39;  // @gotags: gorm:"<-;column:is_bargain"`
+  // 是否优品推荐
+  int64 isGood = 40;  // @gotags: gorm:"<-;column:is_good"`
+  // 是否单独分佣
+  int64 isSub = 41;  // @gotags: gorm:"<-;column:is_sub"`
+  // 是否开启会员价格
+  int64 isVip = 42;  // @gotags: gorm:"<-;column:is_vip"`
+  // 商品二维码地址(用户小程序海报)
+  string codePath = 43;  // @gotags: gorm:"<-;column:code_path"`
+  // 主图视频链接
+  string videoLink = 44;  // @gotags: gorm:"<-;column:video_link"`
+  // 活动显示排序1=秒杀，2=砍价，3=拼团
+  string activity = 45;  // @gotags: gorm:"<-;column:activity"`
+  // 标签ID
+  string labelId = 46;  // @gotags: gorm:"<-;column:label_id"`
+  // 复制口令
+  string commandWord = 47;  // @gotags: gorm:"<-;column:command_word"`
+  // 推荐商品id
+  string recommendList = 48;  // @gotags: gorm:"<-;column:recommend_list"`
+  // 是否会员专属商品
+  int64 vipProduct = 49;  // @gotags: gorm:"<-;column:vip_product"`
+  // 是否预售商品
+  int64 presale = 50;  // @gotags: gorm:"<-;column:presale"`
+  // 预售开始时间
+  string presaleStartTime = 51;  // @gotags: gorm:"-;column:presale_start_time"`
+  // 预售结束时间
+  string presaleEndTime = 52;  // @gotags: gorm:"-;column:presale_end_time"`
+  // 预售结束后几天内发货
+  int64 presaleDay = 53;  // @gotags: gorm:"<-;column:presale_day"`
+  // 物流方式
+  string logistics = 54;  // @gotags: gorm:"<-;column:logistics"`
+  // 运费设置
+  int64 freight = 55;  // @gotags: gorm:"<-;column:freight"`
+  // 自定义表单
+  string customForm = 56;  // @gotags: gorm:"<-;column:custom_form"`
+  // 排序
+  int64 sortBy = 57;  // @gotags:  gorm:"<-;column:sort_by"`
+  // 删除状态
+  bool delStatus = 58;  // @gotags: `gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"`
+  // 创建人
+  string createBy = 59;  // @gotags: `gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 修改人
+  string updateBy = 60;  // @gotags: `gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 创建时间
+  string createTime = 61;  // @gotags: `gorm:"->" swaggerignore:"true"`
+  // 修改时间
+  string updateTime = 62;  // @gotags: `gorm:"->" swaggerignore:"true"`
+}
+
+message ProductDetaiVo {
+  // 商品id
+  string productId = 1;
+  // 分类id
+  string categoryId = 2;
+  // 商品名称
+  string productName = 3;
+  // 关键字
+  string keyword = 4;
+  // 商品简介
+  string introduction = 5;
+  // 商品价格(单规格时必填)
+  double price = 6;
+  // 成本价(单规格时必填)
+  double costPrice = 7;
+  // 会员价格(单规格时必填)
+  double vipPrice = 8;
+  // 市场价(单规格时必填)
+  double marketPrice = 9;
+  // 商品图片
+  string image = 10;
+  // 轮播图
+  string sliderImage = 11;
+  // 推荐图
+  string recommendImage = 12;
+  // 库存
+  uint64 stock = 13;
+  // 库存预警
+  uint64 stockWarning = 14;
+  // 单位
+  string unitName = 15;
+  // 运费模板ID
+  string tempId = 16;
+  // 规格(0:单 1:多)
+  int64 specType = 17;
+  // 上架状态（0：未上架，1：上架）
+  int64 isDisplay = 18;
+  // 商品是否是虚拟商品
+  int64 isVirtual = 19;
+  // 品牌id
+  string brandId = 20;
+  // 虚拟商品类型
+  int64 virtualType = 21;
+  // 虚拟销量
+  int64 virtualSales = 22;
+  // 是否开启限购
+  int64 isLimit = 23;
+  // 限购类型(1:单次限购 2:永久限购)
+  int64 limitType = 24;
+  // 限购数量
+  int64 limitNum = 25;
+  // 商品详情
+  string content = 26;
+  // 商品唯一编号
+  string sn = 27;
+  // 浏览量
+  int64 views = 28;
+  // 商品条码（条形码）
+  string barCode = 29;
+  // 商户id(0为超级员创建 非0时为商户)
+  int64 merId = 30;
+  // 销量
+  int64 sales = 31;
+  // 是否热卖
+  int64 isHot = 32;
+  // 是否优惠
+  int64 isBenefit = 33;
+  // 是否精品
+  int64 isBest = 34;
+  // 是否新品
+  int64 isNew = 35;
+  // 商户是否代理(0:不可代理 1:可代理)
+  int64 merUse = 36;
+  // 获得积分
+  int64 giveIntegral = 37;
+  // 秒杀状态(0:未开启 1:已开启)
+  int64 isSeckill = 38;
+  // 砍价状态(0:未开启 1:开启)
+  int64 isBargain = 39;
+  // 是否优品推荐
+  int64 isGood = 40;
+  // 是否单独分佣
+  int64 isSub = 41;
+  // 是否开启会员价格
+  int64 isVip = 42;
+  // 商品二维码地址(用户小程序海报)
+  string codePath = 43;
+  // 主图视频链接
+  string videoLink = 44;
+  // 活动显示排序1=秒杀，2=砍价，3=拼团
+  string activity = 45;
+  // 标签ID
+  string labelId = 46;
+  // 复制口令
+  string commandWord = 47;
+  // 推荐商品id
+  string recommendList = 48;
+  // 是否会员专属商品
+  int64 vipProduct = 49;
+  // 是否预售商品
+  int64 presale = 50;
+  // 预售开始时间
+  string presaleStartTime = 51;
+  // 预售结束时间
+  string presaleEndTime = 52;
+  // 预售结束后几天内发货
+  int64 presaleDay = 53;
+  // 物流方式
+  string logistics = 54;
+  // 运费设置
+  int64 freight = 55;
+  // 自定义表单
+  string customForm = 56;
+  // 排序
+  int64 sortBy = 57;
+  // 删除状态
+  bool delStatus = 58;
+  // 创建人
+  string createBy = 59;
+  // 修改人
+  string updateBy = 60;
+  // 创建时间
+  string createTime = 61;
+  // 修改时间
+  string updateTime = 62;
+  // 多规格Sku
+  message ProductSku {
+    // 规格id
+    string skuId = 1;
+    string productId = 2;
+    string sukName = 3;
+    string sales = 4;
+    string price = 5;
+    string costPrice = 6;
+    string vipPrice = 7;
+    string marketPrice = 8;
+    string image = 9;
+    string sn = 10;
+    string stock = 11;
+    string stockWarning = 12;
+    string barCode = 13;
+    string weight = 14;
+    string volume = 15;
+    string type = 16;
+    string quota = 17;
+    string quotaShow = 18;
+    string couponId = 19;
+    string brokerage = 20;
+    string brokerageTwo = 21;
+  }
+  // 商品sku
+  repeated ProductSku skuList = 63;  // @gotags: `json:"skuList" gorm:"-" `
+}
+
+// ProductIds 产品id
+message ProductIds {
+  repeated string ProductIds = 1;
+  string userId = 2;
+}
+
+// ProductParamIds 产品
+message ProductParamIds {
+  repeated global.ProductParam params = 1;
+}
+
+message CreateOrderParams {
+  // 商品参数列表
+  string AddressId = 1;  // @gotags: validate:"required"
+  // 商品参数列表
+  repeated global.ProductParam productList = 2;  // @gotags: validate:"required"
+  // 支付类型 1:直接支付 2:余额支付
+  int64 payType = 3;  // @gotags: validate:"required" minimum:"1" maximum:"2" default:"1"
+  // 交易类型(1:微信 2:支付宝)
+  int64 tradeType = 4;  // @gotags: validate:"required" minimum:"1" maximum:"2" default:"1"
+}
+
+message ProductPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询调教
+  message QueryParams {
+    // 商品名称
+    string productName = 1;
+    // 关键词
+    string keyword = 2;
+  }
+  // 查询参数
+  QueryParams params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 结果返回
+message ProductResponse {
+  // 数据量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 详情
+  ProductDetaiVo detail = 3;
+  // 商品扩展列表
+  repeated global.ProductExpand expandList = 4;
+  // 商品分页列表
+  repeated ProductListVo list = 5;
+}
+
+service ProductService {
+  // 查询商品详情
+  rpc FindById(ProductIds) returns (ProductResponse);
+
+  // 查询商品分页列表
+  rpc FindPageList(ProductPageAuthQuery) returns (ProductResponse);
+
+  // 根据id查询商品列表（包括sku反查）
+  rpc FindListByProductIds(CreateOrderParams) returns (ProductResponse);
+}

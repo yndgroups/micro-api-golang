@@ -1,0 +1,1698 @@
+basePath: /api/order
+definitions:
+  Pager:
+    description: Pager 请求参数统一封装
+    properties:
+      list:
+        description: 列表
+      pageIndex:
+        description: 分页索引
+        type: integer
+      pageNum:
+        description: 分页数
+        type: integer
+      pageSize:
+        description: 分页长度
+        type: integer
+      totalCount:
+        description: 数据长度
+        type: integer
+    type: object
+  Request-any:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-order_OrderMobileParams:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/order.OrderMobileParams'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-order_OrderParams:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/order.OrderParams'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Response:
+    properties:
+      code:
+        default: 0
+        description: 结果状态码
+        type: integer
+      data:
+        description: 结果
+      msg:
+        default: 请求失败
+        description: 状态信息
+        type: string
+    type: object
+  order.CreateOrderParams:
+    type: object
+  order.FreightTemplates:
+    properties:
+      appoint:
+        default: 0
+        description: 指定包邮(0:包邮 1:不包邮)
+        maximum: 1
+        minimum: 0
+        type: integer
+      billingMethods:
+        description: 计费方式 1、DHL快递收费 2 ups快递收费 3、FEDEX快递收费 4、EMS快递收费
+        maximum: 4
+        minimum: 1
+        type: integer
+      name:
+        description: 模板名称
+        type: string
+      noDelivery:
+        default: 0
+        description: 指定不送达 (0:送达 1:不送达)
+        maximum: 1
+        minimum: 0
+        type: integer
+      sortBy:
+        description: 排序
+        type: integer
+      tempId:
+        description: 模板id(新增时不传值，修改时必须传值)
+        type: string
+    required:
+    - appoint
+    - billingMethods
+    - name
+    - noDelivery
+    type: object
+  order.FreightTemplatesFree:
+    properties:
+      areaCode:
+        description: 地区code(省或者城市)
+        type: string
+      billingMethods:
+        description: 计费方式
+        type: integer
+      freeId:
+        description: 包邮id
+        type: string
+      price:
+        description: 包邮金额
+        type: number
+      quantity:
+        description: 包邮件数
+        type: integer
+    required:
+    - areaCode
+    - billingMethods
+    - price
+    - quantity
+    type: object
+  order.FreightTemplatesPageAuthQuery:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/order.FreightTemplatesPageAuthQuery_QueryParams'
+        description: 查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  order.FreightTemplatesPageAuthQuery_QueryParams:
+    properties:
+      name:
+        type: string
+    type: object
+  order.FreightTemplatesRegion:
+    properties:
+      areaCode:
+        description: 地区编码(包含省和市)
+        type: string
+      billingMethods:
+        description: 计费方式
+        type: integer
+      continued:
+        description: 续件
+        type: integer
+      continuedPrice:
+        description: 续件价格
+        type: number
+      first:
+        description: 首件
+        type: integer
+      firstPrice:
+        description: 首件运费
+        type: number
+      regionId:
+        description: 区域运费id
+        type: string
+      tempId:
+        description: 模板id
+        type: string
+    required:
+    - areaCode
+    - billingMethods
+    - continued
+    - continuedPrice
+    - first
+    - firstPrice
+    - tempId
+    type: object
+  order.FreightTemplatesUndelivered:
+    properties:
+      areaCode:
+        description: 地区编码(包含省和市
+        type: string
+      tempId:
+        description: 模板id
+        type: string
+      undeliveredId:
+        description: 不送达id
+        type: string
+    required:
+    - areaCode
+    - tempId
+    type: object
+  order.OrderListVo:
+    properties:
+      confId:
+        description: 配置id
+        type: string
+      confIdName:
+        description: 配置id
+        type: string
+      createBy:
+        description: 创建人
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delStatus:
+        description: 删除状态
+        type: boolean
+      freightPrice:
+        description: 运费金额
+        type: number
+      orderId:
+        description: 订单id
+        type: string
+      orderNo:
+        description: 订单号
+        type: string
+      parentId:
+        description: 父类订单id
+        type: string
+      payPrice:
+        description: 实际支付金额
+        type: number
+      payStatus:
+        description: 支付状态
+        type: integer
+      payStatusName:
+        description: 支付状态
+        type: string
+      payTime:
+        description: 支付时间
+        type: string
+      payType:
+        description: 支付类型(1:直接支付 2:余额支付)
+        type: integer
+      payTypeName:
+        description: 支付类型名称
+        type: string
+      realName:
+        description: 用户姓名
+        type: string
+      status:
+        description: 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+        type: integer
+      statusName:
+        description: 状态名称
+        type: string
+      totalPostage:
+        description: 邮费
+        type: number
+      totalPrice:
+        description: 订单总价
+        type: number
+      totalQuantity:
+        description: 订单商品总数
+        type: integer
+      tradeNo:
+        description: 下单号
+        type: string
+      tradeType:
+        description: 交易类型(1:微信 2:支付宝)
+        type: integer
+      tradeTypeName:
+        description: 交易类型名称
+        type: string
+      updateBy:
+        description: 修改人
+        type: string
+      updateTime:
+        description: 修改时间
+        type: string
+      userAddress:
+        description: 详细地址
+        type: string
+      userPhone:
+        description: 用户电话
+        type: string
+    type: object
+  order.OrderMobileParams:
+    properties:
+      findType:
+        description: 查询类型 1:个人订单查询 2:管理员订单查询
+        type: integer
+      orderNo:
+        description: 订单号
+        type: string
+    type: object
+  order.OrderParams:
+    properties:
+      orderNo:
+        description: 订单号
+        type: string
+      payStatus:
+        description: 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+        type: integer
+      tradeNo:
+        description: 下单号
+        type: string
+      userPhone:
+        description: 下单电话号码
+        type: string
+    type: object
+  order.PayOrderParam:
+    properties:
+      orderId:
+        description: 订单id
+        type: string
+      payMark:
+        description: 支付标识必传
+        type: string
+      payPwd:
+        description: 支付密码[余额支付时必传]
+        type: string
+      payType:
+        description: 支付类型(1:微信公众号 2:微信小程序 3:支付宝支付)
+        type: integer
+      tradeType:
+        description: 交易类型(1:余额 2:微信  3:支付宝)
+        type: integer
+    required:
+    - orderId
+    - payMark
+    - payType
+    - tradeType
+    type: object
+  order.PocketMoneyPageAuthQuery:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/order.PocketMoneyPageAuthQuery_QueryParams'
+        description: 查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  order.PocketMoneyPageAuthQuery_QueryParams:
+    properties:
+      payType:
+        description: 支付类型
+        type: string
+      rechargeId:
+        description: 充值订单id
+        type: string
+    type: object
+  order.SetPayPwdParam:
+    properties:
+      payPwd:
+        description: 密码
+        type: string
+      phone:
+        description: 收i手机号
+        type: string
+      verifyCode:
+        description: 验证码
+        type: string
+    required:
+    - payPwd
+    - phone
+    - verifyCode
+    type: object
+info:
+  contact:
+    email: 826422592@qq.com
+    name: 杨大琼
+    url: http://localhost
+  description: swagger go API文档
+  license:
+    name: Apache 2.0
+  title: 订单服务提供者文档
+paths:
+  /order:
+    delete:
+      description: 主要用于订单删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除订单
+      tags:
+      - 订单管理
+    post:
+      description: 主要用于统一下单
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用参数
+        in: body
+        name: createOder
+        required: true
+        schema:
+          $ref: '#/definitions/order.CreateOrderParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 统一下单
+      tags:
+      - 订单管理
+  /order/findById/{id}:
+    get:
+      description: 根据id查询订单内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 订单id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询订单内容详情
+      tags:
+      - 订单管理
+  /order/findByParams:
+    post:
+      description: 根据订单参数查询订单信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/order.OrderParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据订单参数查询订单信息
+      tags:
+      - 订单管理
+  /order/findPageList:
+    post:
+      description: 主要用于查询订单分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-order_OrderParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.OrderListVo'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 订单分页列表
+      tags:
+      - 订单管理
+  /order/m:
+    delete:
+      description: 主要用于订单删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除订单
+      tags:
+      - 订单管理-移动端
+  /order/m/findPageList:
+    post:
+      description: 主要用于查询订单分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-order_OrderMobileParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.OrderListVo'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 订单分页列表-移动端
+      tags:
+      - 订单管理-移动端
+  /order/pay:
+    post:
+      description: 主要用于订单支付
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 订单支付参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.PayOrderParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 订单支付
+      tags:
+      - 订单管理
+  /order/statistics:
+    get:
+      description: 订单统计
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 订单统计
+      tags:
+      - 订单管理
+  /pay/updatePayPwd:
+    post:
+      description: 主要用于设置支付密码
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 支付参数设置
+        in: body
+        name: pwdParam
+        required: true
+        schema:
+          $ref: '#/definitions/order.SetPayPwdParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 设置支付密码
+      tags:
+      - 支付相关
+  /pocketMoney/create/{amount}:
+    get:
+      description: 主要用于余额充值
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 金额
+        in: path
+        name: amount
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 余额充值
+      tags:
+      - 零钱管理
+  /pocketMoney/findById/{id}:
+    get:
+      description: 主要用于根据id查询详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/order.FreightTemplates'
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询详情
+      tags:
+      - 模板管理-运费模板
+  /pocketMoney/findPageList:
+    post:
+      description: 主要用于查询充值记录
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/order.PocketMoneyPageAuthQuery'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 充值记录
+      tags:
+      - 零钱管理
+  /pocketMoney/getBalance:
+    get:
+      description: 主要用于查询零钱余额
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询零钱余额
+      tags:
+      - 零钱管理
+  /templates:
+    delete:
+      description: 主要用于用户进行模板删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板删除
+      tags:
+      - 模板管理-运费模板
+    post:
+      description: 主要用于用户进行模板添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplates'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板添加
+      tags:
+      - 模板管理-运费模板
+    put:
+      description: 主要用于用户进行模板修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplates'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板修改
+      tags:
+      - 模板管理-运费模板
+  /templates/findById/{id}:
+    get:
+      description: 主要用于模板详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id模板详情查询
+      tags:
+      - 模板管理-运费模板
+  /templates/findPageList:
+    post:
+      description: 主要用于模板分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesPageAuthQuery'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.FreightTemplates'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板分页列表查询
+      tags:
+      - 模板管理-运费模板
+  /templatesFree:
+    delete:
+      description: 主要用于用户进行模板免邮删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板免邮id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板免邮删除
+      tags:
+      - 模板管理-免邮
+    post:
+      description: 主要用于用户进行模板免邮添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板免邮新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesFree'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板免邮添加
+      tags:
+      - 模板管理-免邮
+    put:
+      description: 主要用于用户进行模板免邮修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板免邮参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesFree'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板免邮修改
+      tags:
+      - 模板管理-免邮
+  /templatesFree/findById/{id}:
+    get:
+      description: 主要用于模板免邮详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板免邮id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/order.FreightTemplatesFree'
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id模板免邮详情查询
+      tags:
+      - 模板管理-免邮
+  /templatesFree/findPageList:
+    post:
+      description: 主要用于模板免邮分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-any'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.FreightTemplatesFree'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板免邮分页列表查询
+      tags:
+      - 模板管理-免邮
+  /templatesRegion:
+    delete:
+      description: 主要用于用户进行模板区域运费删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板区域运费id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板区域运费删除
+      tags:
+      - 模板管理-区域运费
+    post:
+      description: 主要用于用户进行模板区域运费添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板区域运费新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesRegion'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板区域运费添加
+      tags:
+      - 模板管理-区域运费
+    put:
+      description: 主要用于用户进行模板区域运费修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板区域运费参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesRegion'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板区域运费修改
+      tags:
+      - 模板管理-区域运费
+  /templatesRegion/findById/{id}:
+    get:
+      description: 主要用于模板区域运费详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板区域运费id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/order.FreightTemplatesRegion'
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id模板区域运费详情查询
+      tags:
+      - 模板管理-区域运费
+  /templatesRegion/findPageList:
+    post:
+      description: 主要用于模板区域运费分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-any'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.FreightTemplatesRegion'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板区域运费分页列表查询
+      tags:
+      - 模板管理-区域运费
+  /templatesUndelivered:
+    delete:
+      description: 主要用于用户进行模板不送达删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板不送达id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板不送达删除
+      tags:
+      - 模板管理-不送达
+    post:
+      description: 主要用于用户进行模板不送达添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板不送达新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesUndelivered'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板不送达添加
+      tags:
+      - 模板管理-不送达
+    put:
+      description: 主要用于用户进行模板不送达修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板不送达参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/order.FreightTemplatesUndelivered'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板不送达修改
+      tags:
+      - 模板管理-不送达
+  /templatesUndelivered/findById/{id}:
+    get:
+      description: 主要用于模板不送达详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 模板不送达id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/order.FreightTemplatesUndelivered'
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id模板不送达详情查询
+      tags:
+      - 模板管理-不送达
+  /templatesUndelivered/findPageList:
+    post:
+      description: 主要用于模板不送达分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-any'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/order.FreightTemplatesUndelivered'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 模板不送达分页列表查询
+      tags:
+      - 模板管理-不送达
+  /wechat/closeOrder/{tradeNo}:
+    get:
+      description: 主要用于关闭订单
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 订单号
+        in: path
+        name: tradeNo
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 关闭订单
+      tags:
+      - 微信支付
+  /wechat/findOrderByTradeNo/{tradeNo}:
+    get:
+      description: 主要用于订单查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 订单号
+        in: path
+        name: tradeNo
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 订单支付查询
+      tags:
+      - 微信支付
+  /wechat/notify/{confId}:
+    post:
+      description: 主要用于微信订单支付成功回调
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 微信支付成功回调
+      tags:
+      - 微信支付
+  /wechat/weChatRefunds:
+    get:
+      description: 主要用于申请退款
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 申请退款
+      tags:
+      - 微信支付
+swagger: "2.0"

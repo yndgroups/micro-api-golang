@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message Express {
+  // 快递公司id
+  string expressId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 快递公司全称
+  string fullName = 2;  // @gotags: gorm:"<-"
+  // 简称
+  string abbreviation = 3;  // @gotags: gorm:"<-"
+  // 合伙人id
+  string partnerId = 4;  // @gotags: gorm:"<-"
+  // 合伙人密钥
+  string partnerKey = 5;  // @gotags: gorm:"<-"
+  // 是否需要取件网店
+  int64 Net = 6;  // @gotags: gorm:"<-"
+  // 账号
+  string account = 7;  // @gotags: gorm:"<-"
+  // 密钥
+  string secretCode = 8;  // @gotags: gorm:"<-"
+  // 网点名称
+  string netName = 9;  // @gotags: gorm:"<-"
+  // 是否显示(0:不显示 1:显示)
+  int64 display = 10;  // @gotags: gorm:"<-"
+  // 是否可用(0:不可用 1:可用)
+  int64 enabled = 11;  // @gotags: gorm:"<-"
+  // 排序
+  int64 sortBy = 12;
+  // 删除状态
+  bool delStatus = 13;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 14;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 15;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 16;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 17;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message ExpressParam {
+  string fullName = 1;
+}
+
+message ExpressListVo {
+}
+
+message ExpressDetailVo {
+}
+
+message ExpressIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message ExpressPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  ExpressParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message ExpressResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Express detail = 3;  // 详情
+  repeated Express list = 4;  // 列表
+}
+
+// 业务实现
+service ExpressService {
+  // 新增
+  rpc Create(Express) returns (ExpressResponse);
+
+  // 修改
+  rpc Update(Express) returns (ExpressResponse);
+
+  // 删除
+  rpc Delete(ExpressIds) returns (ExpressResponse);
+
+  // 查询 详情
+  rpc FindById(ExpressIds) returns (ExpressResponse);
+
+  // 查询 分页
+  rpc FindPageList(ExpressPageAuthQuery) returns (ExpressResponse);
+}

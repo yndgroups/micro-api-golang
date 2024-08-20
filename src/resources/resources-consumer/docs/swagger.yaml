@@ -1,0 +1,188 @@
+basePath: /api/resources
+definitions:
+  Response:
+    properties:
+      code:
+        default: 0
+        description: 结果状态码
+        type: integer
+      data:
+        description: 结果
+      msg:
+        default: 请求失败
+        description: 状态信息
+        type: string
+    type: object
+  model.File:
+    properties:
+      filePath:
+        description: 文件路径
+        type: string
+      sizeType:
+        description: 尺寸类型
+        type: integer
+    required:
+    - filePath
+    - sizeType
+    type: object
+info:
+  contact:
+    email: 826422592@qq.com
+    name: 杨大琼
+    url: http://localhost
+  description: swagger go API文档
+  license:
+    name: Apache 2.0
+  title: 资源管理服务提供者文档
+paths:
+  /file/delete:
+    post:
+      description: 主要用于文件删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.File'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "404":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 文件删除
+      tags:
+      - 文件上传管理
+  /file/getList:
+    post:
+      description: 主要用于获取文件列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "404":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 获取文件列表
+      tags:
+      - 文件上传管理
+  /file/multipleUpload/{sizeType}:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 主要用于多尺寸单个文件上传
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: '上传类型: 1：单尺寸上传 2：多尺寸上传'
+        in: path
+        name: sizeType
+        required: true
+        type: string
+      - description: 文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "300":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 多尺寸多个文件上传
+      tags:
+      - 文件上传管理
+  /file/singleUpload/{sizeType}:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 主要用于多尺寸单个文件上传
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: '上传类型: 1：单尺寸上传 2：多尺寸上传'
+        in: path
+        name: sizeType
+        required: true
+        type: string
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "404":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求失败
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 多尺寸单个文件上传
+      tags:
+      - 文件上传管理
+swagger: "2.0"

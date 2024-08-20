@@ -1,0 +1,3653 @@
+basePath: /api/common
+definitions:
+  JsSdkDTO:
+    properties:
+      confId:
+        description: 配置id
+        type: string
+      randomUrl:
+        description: 随机地址不能为空
+        type: string
+    required:
+    - confId
+    - randomUrl
+    type: object
+  LoginDTO:
+    properties:
+      email:
+        description: 邮箱
+        type: string
+      phone:
+        description: 电话号码
+        type: string
+      userName:
+        description: 用户名 [必填]
+        type: string
+      userPassword:
+        description: 用户密码 [必填]
+        type: string
+    type: object
+  Pager:
+    description: Pager 请求参数统一封装
+    properties:
+      list:
+        description: 列表
+      pageIndex:
+        description: 分页索引
+        type: integer
+      pageNum:
+        description: 分页数
+        type: integer
+      pageSize:
+        description: 分页长度
+        type: integer
+      totalCount:
+        description: 数据长度
+        type: integer
+    type: object
+  Request-common_AgreementParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.AgreementParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-common_AppParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.AppParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-common_AreaParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.AreaParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-common_OrgParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.OrgParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-common_RoleParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.RoleParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Request-common_SysFuncParam:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.SysFuncParam'
+        description: 请求查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  Response:
+    properties:
+      code:
+        default: 0
+        description: 结果状态码
+        type: integer
+      data:
+        description: 结果
+      msg:
+        default: 请求失败
+        description: 状态信息
+        type: string
+    type: object
+  common.Agreement:
+    properties:
+      agreeId:
+        description: 协议id
+        type: string
+      content:
+        description: 协议内容
+        type: string
+      display:
+        description: 1：显示：0：不显示
+        type: integer
+      sortBy:
+        description: 排序
+        type: integer
+      title:
+        description: 协议名称
+        type: string
+      type:
+        description: 协议类型  1：会员协议,2:代理商协议
+        type: integer
+    type: object
+  common.AgreementParam:
+    properties:
+      content:
+        description: 协议内容
+        type: string
+      title:
+        description: 协议名称
+        type: string
+    type: object
+  common.App:
+    properties:
+      appId:
+        description: 应用id
+        type: string
+      icon:
+        description: 应用图标
+        type: string
+      introduce:
+        description: 应用介绍
+        type: string
+      mdId:
+        description: 模块id [必传参数]
+        type: string
+      name:
+        description: 应用名称[必传参数] true
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+      status:
+        default: 1
+        description: 启用状态（0:启用 1：禁用）
+        maximum: 2
+        minimum: 1
+        type: integer
+    type: object
+  common.AppModule:
+    properties:
+      MdId:
+        description: 模块id
+        type: string
+      cssPath:
+        description: css静态资源地址
+        type: string
+      host:
+        description: 主机地址
+        type: string
+      jsPath:
+        description: js静态资源地址
+        type: string
+      matchPath:
+        description: 路由前缀匹配
+        type: string
+      name:
+        description: 模块名称
+        type: string
+    type: object
+  common.AppParam:
+    properties:
+      introduce:
+        description: 应用介绍
+        type: string
+      name:
+        description: 应用名称
+        type: string
+    type: object
+  common.Area:
+    properties:
+      areaCode:
+        description: 地区码
+        type: string
+      areaId:
+        description: 主键id
+        type: string
+      areaName:
+        description: 地区名称
+        type: string
+      areaTag:
+        description: 区划等级
+        type: integer
+      fullAreaName:
+        description: 地区名称全称
+        type: string
+      isStandard:
+        description: 匹配条件
+        type: integer
+      parentCode:
+        description: 父级代码
+        type: string
+      year:
+        description: 年份
+        type: integer
+    required:
+    - areaCode
+    - areaName
+    - fullAreaName
+    - parentCode
+    type: object
+  common.AreaParam:
+    properties:
+      areaCode:
+        description: 地区码
+        type: string
+      areaName:
+        description: 地区名称
+        type: string
+    type: object
+  common.Config:
+    properties:
+      PrivateKey:
+        description: 私钥
+        type: string
+      aesKey:
+        description: EncodingAESKey由开发者手动填写或随机生成，将用作消息体加解密密钥。（43位）
+        type: string
+      amount:
+        description: 默认支付金额
+        type: number
+      apiV2Key:
+        description: apiV2Key，商户平台获取
+        type: string
+      apiV3Key:
+        description: apiV3Key，商户平台获取
+        type: string
+      appId:
+        description: 应用id
+        type: string
+      confId:
+        description: 配置id
+        type: string
+      confType:
+        description: '配置类型: 1小程序 2公众号'
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      jsApiTicket:
+        description: 公众号用于调用微信JS接口的临时票据
+        type: string
+      mchId:
+        description: 支付商户号
+        type: string
+      msgDataFormat:
+        description: 消息格式化（比如：JSON）
+        type: string
+      notifyUrl:
+        description: 异步回调地址
+        type: string
+      outsideAppId:
+        description: 外部来源id
+        type: string
+      outsideAppName:
+        description: 外部来源名称
+        type: string
+      outsideAppSecret:
+        description: 外部来源秘钥
+        type: string
+      paterNerKey:
+        description: 私人密钥
+        type: string
+      phone:
+        description: 电话号码
+        type: string
+      returnUrl:
+        description: 同步回调地址
+        type: string
+      serialNo:
+        description: 商户证书的证书序列号
+        type: string
+      timestamp:
+        description: 时间戳
+        type: integer
+      token:
+        description: Token可以由开发者任意填写，用作生成签名（该Token会配置在服务器中和接口URL中包含的Token进行比对，从而验证安全性）。
+        type: string
+    type: object
+  common.ConfigIds:
+    properties:
+      appId:
+        type: string
+      confIds:
+        items:
+          type: string
+        type: array
+      storeIds:
+        items:
+          type: string
+        type: array
+      userId:
+        type: string
+    type: object
+  common.Department:
+    properties:
+      children:
+        description: 子集菜单
+        items:
+          $ref: '#/definitions/common.Department'
+        type: array
+      deptId:
+        description: 部门id
+        type: string
+      deptName:
+        description: 部门名称
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      leader:
+        description: 负责人
+        type: string
+      orgId:
+        description: 组织或机构
+        type: string
+      parentId:
+        description: 父部门id true
+        type: string
+      phone:
+        description: 联系电话
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+      status:
+        default: 1
+        description: 状态（1正常 0停用）
+        maximum: 1
+        minimum: 0
+        type: integer
+      tree:
+        description: 部门树
+        type: string
+    type: object
+  common.Dict:
+    properties:
+      Enable:
+        description: 启用状态
+        type: integer
+      description:
+        description: 字典解释/说明
+        type: string
+      dictId:
+        description: 字典id
+        type: string
+      dictName:
+        description: 字典名称
+        type: string
+      dictValue:
+        description: 字典解释/说明
+        type: string
+      parentId:
+        description: 父id(默认为1)
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+    required:
+    - dictValue
+    type: object
+  common.Menu:
+    properties:
+      appId:
+        description: 应用id
+        type: string
+      children:
+        description: 子集菜单
+        items:
+          $ref: '#/definitions/common.Menu'
+        type: array
+      icon:
+        description: 菜单图标
+        type: string
+      menuId:
+        description: 菜单id
+        type: string
+      name:
+        description: 菜单名称
+        type: string
+      parentId:
+        description: '''菜单父id(一级菜单父id为1, 默认为1）'
+        type: string
+      powerSign:
+        description: 权限标识
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+      type:
+        description: 是否是菜单（0:是按钮[默认] 1:是菜单）
+        type: integer
+      url:
+        description: 菜单地址(作为菜单是必填 按钮是非必填)
+        type: string
+    required:
+    - icon
+    - name
+    - powerSign
+    - type
+    type: object
+  common.Org:
+    properties:
+      addrDetail:
+        description: 地质详情 比如多少栋楼多少号
+        type: string
+      areaCode:
+        description: 省代码
+        type: string
+      auditDescription:
+        description: 审核消息
+        type: string
+      auditStatus:
+        description: 企业状态 1:待审核 2:审核失败 3:审核成功 4:再次提交
+        type: integer
+      benefits:
+        description: 公司福利 使用-分割
+        type: string
+      characteristic:
+        description: 公司特点 使用-分割
+        type: string
+      contactEmail:
+        description: 联系邮箱
+        type: string
+      contactNumber:
+        description: 联系电话
+        type: string
+      contactPerson:
+        description: 联系人
+        type: string
+      createType:
+        description: 创建类型：1:后台管理员添加 2:自己注册
+        type: integer
+      creditCode:
+        description: 统一社会信用代码
+        type: string
+      description:
+        description: 描述
+        type: string
+      email:
+        description: 联系邮箱
+        type: string
+      hotSort:
+        description: 热门企业或组织显示排序
+        type: integer
+      industryIds:
+        description: 行业类别id，多个使用-分割
+        type: string
+      industrySort:
+        description: 行业巨头显示排序
+        type: integer
+      isHot:
+        description: 是否为热门企业 1 是 0不是
+        type: integer
+      isIndustryGiant:
+        description: 是否为行业巨头或组织 1是 2不是
+        type: integer
+      isRecommend:
+        description: 是否为推荐企业或组织 1是 2不是
+        type: integer
+      jobNum:
+        description: 岗位数量
+        type: integer
+      lat:
+        description: 公司纬度
+        type: string
+      legalPerson:
+        description: 法人
+        type: string
+      legalPersonCardBurl:
+        description: 法人身份证反面地址
+        type: string
+      legalPersonCardPurl:
+        description: 法人身份证正面地址
+        type: string
+      legalPersonUrl:
+        description: 法人介绍地址
+        type: string
+      licensePhotoUrl:
+        description: 企业营业执照地址
+        type: string
+      lng:
+        description: 公司经度
+        type: string
+      logo:
+        description: 企业logo
+        type: string
+      name:
+        description: 企业名称
+        type: string
+      nature:
+        description: 企业性质 多个使用-分割
+        type: string
+      orgId:
+        description: 组织id
+        type: string
+      recommendSort:
+        description: 推荐企业显示排序
+        type: integer
+      registerAddress:
+        description: 注册地址
+        type: string
+      registerNo:
+        description: 企业注册号
+        type: string
+      scale:
+        description: 公司规模
+        type: string
+      scalePersonMax:
+        description: 人工规模最大人数，-1 为以上
+        type: integer
+      scalePersonMin:
+        description: 人员规模最小人数
+        type: integer
+      views:
+        description: 企业浏览量
+        type: integer
+    type: object
+  common.OrgParam:
+    properties:
+      contactPerson:
+        description: 联系人
+        type: string
+      legalPerson:
+        description: 法人
+        type: string
+      name:
+        description: 组织或企业名称
+        type: string
+    type: object
+  common.Post:
+    properties:
+      introduce:
+        description: 岗位介绍或备注
+        type: string
+      postCode:
+        description: 岗位编码
+        type: string
+      postId:
+        description: 岗位id
+        type: string
+      postName:
+        description: 岗位名称
+        type: string
+      sortBy:
+        description: 显示顺序
+        type: integer
+      status:
+        description: 状态（1正常[默认] 0停用）
+        type: integer
+    required:
+    - postCode
+    - postName
+    type: object
+  common.Role:
+    properties:
+      appId:
+        description: 应用id
+        type: string
+      introduce:
+        description: 角色介绍
+        type: string
+      name:
+        description: 角色名称
+        type: string
+      roleId:
+        description: 角色id
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+      uniqueIdentification:
+        description: 角色唯一标识（不能更改）
+        type: integer
+    required:
+    - appId
+    - introduce
+    - name
+    type: object
+  common.RoleFunc:
+    properties:
+      funcId:
+        description: 功能id
+        type: string
+      roleId:
+        description: 角色id
+        type: string
+    type: object
+  common.RoleMenu:
+    properties:
+      menuId:
+        description: 菜单id
+        type: string
+      roleId:
+        description: 角色id
+        type: string
+    type: object
+  common.RoleParam:
+    properties:
+      name:
+        description: 角色名称
+        type: string
+    type: object
+  common.SysFunc:
+    properties:
+      appId:
+        description: 应用id
+        type: string
+      funcId:
+        description: 功能id
+        type: string
+      name:
+        description: 功能名称
+        type: string
+      parentId:
+        description: '''功能父id(一级功能父id为1, 默认为1）'
+        type: string
+      powerSign:
+        description: 权限标识
+        type: string
+      sortBy:
+        description: 排序
+        type: integer
+    required:
+    - name
+    - powerSign
+    type: object
+  common.SysFuncParam:
+    properties:
+      Name:
+        description: 功能名称
+        type: string
+    type: object
+  common.User:
+    properties:
+      accountType:
+        description: 帐号类型（1：个人账户，2：企业）
+        type: integer
+      email:
+        description: 用户邮箱登录
+        type: string
+      openId:
+        description: 微信OpenId
+        type: string
+      phone:
+        description: 用户电话
+        type: string
+      reasonsProhibition:
+        description: 禁用原因
+        type: string
+      regType:
+        description: '来源分类(1:后台端 2:前端 3: 微信公众号 4:微信小程序）'
+        type: integer
+      salt:
+        description: 加密盐
+        type: string
+      sourceId:
+        description: 帐号来源某个应用的appId
+        type: string
+      status:
+        description: 状态(1:启用(审核通过)[默认] 2:禁用 3:待审核)
+        type: integer
+      userId:
+        description: 用户id
+        type: string
+      userName:
+        description: 用户名
+        type: string
+      userPassword:
+        description: 用户密码
+        type: string
+    type: object
+  common.UserAddress:
+    properties:
+      addressId:
+        description: 收货地址id(新增的时候不用传参数，传了也没用，但是修改的时候必须传入正确id)
+        type: string
+      areaCode:
+        description: 地址编码
+        type: string
+      detail:
+        description: 详细地址
+        type: string
+      isDefault:
+        description: 是否默认收货地址(0:否[默认] 1:是)
+        type: integer
+      noteType:
+        description: 标注(1:公司 2:家)
+        type: integer
+      phone:
+        description: 联系人电话
+        type: string
+      postCode:
+        description: 邮政编码
+        type: string
+      realName:
+        description: 联系人姓名
+        type: string
+    required:
+    - areaCode
+    - detail
+    - phone
+    - realName
+    type: object
+  common.UserPageAuthQuery:
+    properties:
+      pageIndex:
+        description: 分页索引
+        example: 1
+        minimum: 1
+        type: integer
+      pageSize:
+        description: 分页长度
+        example: 10
+        maximum: 100
+        minimum: 10
+        type: integer
+      params:
+        allOf:
+        - $ref: '#/definitions/common.UserParam'
+        description: 查询参数
+    required:
+    - pageIndex
+    - pageSize
+    type: object
+  common.UserParam:
+    properties:
+      appId:
+        description: 应用id
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      openId:
+        description: openId
+        type: string
+      phone:
+        description: 电话号码
+        type: string
+      regType:
+        description: '注册类型 1:后台端 2:前端 3: 微信公众号 4:微信小程序'
+        type: integer
+      userId:
+        description: 用户id
+        type: string
+      userName:
+        description: 用户名
+        type: string
+    type: object
+  common.UserRole:
+    properties:
+      appId:
+        description: 用户id
+        type: string
+      roleId:
+        description: 角色id
+        type: string
+      userId:
+        description: 用户id
+        type: string
+    type: object
+  model.WechatLoginParams:
+    properties:
+      avatarUrl:
+        description: 头像[必填]
+        type: string
+      city:
+        description: 所在市
+        type: string
+      gender:
+        description: 性别（1：男， 2：女）")
+        type: integer
+      nickName:
+        description: 微信昵称
+        type: string
+      province:
+        description: 所在省
+        type: string
+      trueName:
+        description: 姓名
+        type: string
+      userType:
+        description: 用户类型（1：教师，2:学生，3：家长，4：其他社会人员）
+        type: string
+      wxCode:
+        description: 微信wxCode
+        type: string
+    required:
+    - wxCode
+    type: object
+info:
+  contact:
+    email: 826422592@qq.com
+    name: 杨大琼
+    url: http://localhost
+  description: Swagger Go API文档 将登录信息获取的token替换 "Bearer token" 里的token字符串，注意中间的空格
+  license:
+    name: Apache 2.0
+  title: 公共服务消费者API文档
+  version: 3.0.0
+paths:
+  /agreement:
+    delete:
+      description: 主要用于协议删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除协议
+      tags:
+      - 协议管理
+    post:
+      description: 主要用于协议新增
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 新增协议参数
+        in: body
+        name: agreement
+        required: true
+        schema:
+          $ref: '#/definitions/common.Agreement'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 创建协议
+      tags:
+      - 协议管理
+    put:
+      description: 主要用于协议修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 修改协议参数
+        in: body
+        name: agreement
+        required: true
+        schema:
+          $ref: '#/definitions/common.Agreement'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改协议
+      tags:
+      - 协议管理
+  /agreement/findById/{id}:
+    get:
+      description: 根据id查询协议内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 协议id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询协议内容详情
+      tags:
+      - 协议管理
+  /agreement/findPageList:
+    post:
+      description: 主要用于查询协议分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/definitions/Request-common_AgreementParam'
+          - properties:
+              params:
+                $ref: '#/definitions/common.AgreementParam'
+            type: object
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 协议分页列表
+      tags:
+      - 协议管理
+  /app:
+    delete:
+      description: 主要用于应用删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用删除
+      tags:
+      - 应用管理
+    post:
+      description: 主要用于用户进行应用添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.App'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用添加
+      tags:
+      - 应用管理
+    put:
+      description: 主要用于用户进行应用修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用修改参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.App'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用修改
+      tags:
+      - 应用管理
+  /app/findAppList:
+    get:
+      description: 主要用于应用删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用查询
+      tags:
+      - 应用管理
+  /app/findAppPageList:
+    post:
+      description: 主要用于应用分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-common_AppParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用分页列表查询
+      tags:
+      - 应用管理
+  /appModule:
+    delete:
+      description: 主要用于应用模块删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用模块id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用模块删除
+      tags:
+      - 应用模块管理
+    post:
+      description: 主要用于应用模块添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.AppModule'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用模块添加
+      tags:
+      - 应用模块管理
+    put:
+      description: 主要用于应用模块修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用修改参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.AppModule'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用模块修改
+      tags:
+      - 应用模块管理
+  /appModule/findAppModuleListByAppId:
+    get:
+      description: 主要用于应用模块删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用id
+        in: query
+        name: appId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用模块查询
+      tags:
+      - 应用模块管理
+  /appModule/findAreaById/{id}:
+    get:
+      description: 主要用于应用模块详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区id
+        in: query
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 应用模块详情查询
+      tags:
+      - 应用模块管理
+  /area:
+    delete:
+      description: 岗位删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 岗位删除
+      tags:
+      - 岗位管理
+    post:
+      description: 主要用于用户进行地区添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Area'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 地区添加
+      tags:
+      - 地区管理
+    put:
+      description: 主要用于用户进行地区修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Area'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 地区修改
+      tags:
+      - 地区管理
+  /area/findAreaByAreaCode:
+    get:
+      description: 主要用于地区详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区编码
+        in: query
+        name: areaCode
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据areaCode地区详情查询
+      tags:
+      - 地区管理
+  /area/findAreaById/{id}:
+    get:
+      description: 主要用于地区详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id地区详情查询
+      tags:
+      - 地区管理
+  /area/findAreaListByParentCode:
+    get:
+      description: 主要用于父级编码查询下级列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区父亲编码
+        in: query
+        name: parentCode
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据父编码查询下级列表
+      tags:
+      - 地区管理
+  /area/findAreaPageList:
+    post:
+      description: 主要用于岗位分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-common_AreaParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 岗位分页列表查询
+      tags:
+      - 地区管理
+  /area/findAreaTree:
+    get:
+      description: 主要用于地区详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询省市区三级数据树状结构
+      tags:
+      - 地区管理
+  /auth/createAnonymityToken/{appId}:
+    get:
+      description: 主要用于创建匿名token
+      parameters:
+      - description: appId
+        in: path
+        name: appId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 创建匿名token
+      tags:
+      - 授权管理
+  /auth/createRoleFunc:
+    post:
+      description: 新增角色与功能关联
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 角色功能参数
+        in: body
+        name: agreement
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/common.RoleFunc'
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 新增角色与功能关联
+      tags:
+      - 授权管理
+  /auth/createRoleMenu:
+    post:
+      description: 主要用于新增角色关联菜单数据
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 角色菜单参数
+        in: body
+        name: agreement
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/common.RoleMenu'
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 新增角色关联菜单数据
+      tags:
+      - 授权管理
+  /auth/createUserRole:
+    post:
+      description: 新增角色与用户关联
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户角色参数
+        in: body
+        name: agreement
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/common.UserRole'
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 新增角色与用户关联
+      tags:
+      - 授权管理
+  /auth/getToken/{appId}:
+    get:
+      description: 主要用于appId获取token,用于新应用数据获取或这切换应用之间进行切换
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: appId
+        in: path
+        name: appId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据appId获取token
+      tags:
+      - 授权管理
+  /auth/getWeChatJSSDK:
+    post:
+      description: 主要用于获取微信 jssdk 授权
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户登录
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/JsSdkDTO'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 获取微信 jssdk 授权
+      tags:
+      - 授权管理
+  /auth/login:
+    post:
+      description: 主要用于用户登录
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户登录
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/LoginDTO'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 用户登录
+      tags:
+      - 授权管理
+  /auth/logout:
+    get:
+      description: 用户退出系统登录
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 退出登陆
+      tags:
+      - 授权管理
+  /auth/refreshPermissions:
+    get:
+      description: 用户刷新权限
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 刷新权限
+      tags:
+      - 授权管理
+  /auth/sendMsg:
+    get:
+      description: 测试发送消息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 测试发送消息
+      tags:
+      - 授权管理
+  /auth/wechatLogin:
+    post:
+      description: 主要用于微信小程序登录
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 微信小程序登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.WechatLoginParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 微信小程序登录
+      tags:
+      - 授权管理
+  /auth/wechatWebLogin:
+    post:
+      description: 主要用于微信公众号登录
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 微信公众号登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/model.WechatLoginParams'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 微信公众号登录
+      tags:
+      - 授权管理
+  /config:
+    delete:
+      description: 主要用于进行配置删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 配置id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 配置删除
+      tags:
+      - 配置管理
+    post:
+      description: 主要用于进行配置添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 配置参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Config'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 配置添加
+      tags:
+      - 配置管理
+    put:
+      description: 主要用于进行配置修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 配置参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Config'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 配置修改
+      tags:
+      - 配置管理
+  /config/findByConfigExpandParam:
+    post:
+      description: 主要用于根据参数条件查询配置文件
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/common.ConfigIds'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据参数条件查询配置文件
+      tags:
+      - 配置管理
+  /config/findConfigById/{id}:
+    get:
+      description: 主要用于进行配置删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 配置id
+        in: query
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 配置删除
+      tags:
+      - 配置管理
+  /dept:
+    delete:
+      description: 主要用于部门删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 部门id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 部门删除
+      tags:
+      - 部门管理
+    post:
+      description: 主要用于用户进行部门添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 部门参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Department'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 部门添加
+      tags:
+      - 部门管理
+    put:
+      description: 主要用于用户进行部门修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 部门修改参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Department'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 部门修改
+      tags:
+      - 部门管理
+  /dept/findTree:
+    get:
+      description: 主要用于部门信息查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 部门信息查询
+      tags:
+      - 部门管理
+  /dict:
+    delete:
+      description: 主要用于用户进行字典删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 字典id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 字典删除
+      tags:
+      - 字典管理
+    post:
+      description: 主要用于用户进行字典添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 字典新增
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Dict'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 字典添加
+      tags:
+      - 字典管理
+    put:
+      description: 主要用于用户进行字典修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 登录对象参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Dict'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 字典修改
+      tags:
+      - 字典管理
+  /dict/findById/{id}:
+    get:
+      description: 主要用于字典列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 字典id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据字典id查询字典列表
+      tags:
+      - 字典管理
+  /dict/findDictListByParentId/{parentId}:
+    get:
+      description: 主要用于字典列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 字典父亲id
+        in: path
+        name: parentId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据字典父id查询字典列表
+      tags:
+      - 字典管理
+  /func:
+    delete:
+      description: 主要用于用户进行功能删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 功能id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 功能删除
+      tags:
+      - 功能管理
+    post:
+      description: 主要用于用户进行功能添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 功能新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.SysFunc'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 功能添加
+      tags:
+      - 功能管理
+    put:
+      description: 主要用于用户进行功能修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 功能参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.SysFunc'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 功能修改
+      tags:
+      - 功能管理
+  /func/findFuncInfoByRoleIds/{roleId}:
+    get:
+      description: 主要用于根据角色id查询当前应用的功能及角色已经用有的功能信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据角色id查询当前应用的功能及角色已经用有的功能信息
+      tags:
+      - 功能管理
+  /func/findFuncList:
+    post:
+      description: 主要用于功能分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-common_SysFuncParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 功能分页列表查询
+      tags:
+      - 功能管理
+  /func/findSysFuncById/{id}:
+    get:
+      description: 主要用于功能详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 功能id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id功能详情查询
+      tags:
+      - 功能管理
+  /menu:
+    delete:
+      description: 主要用于菜单删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 菜单id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 菜单删除
+      tags:
+      - 菜单管理
+    post:
+      description: 主要用于菜单添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 菜单参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Menu'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 菜单添加
+      tags:
+      - 菜单管理
+    put:
+      description: 主要用于菜单修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 登录对象参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Menu'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 菜单修改
+      tags:
+      - 菜单管理
+  /menu/findAll:
+    get:
+      description: 主要用于根据用户权限进行树状菜单查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询应用下的所有菜单
+      tags:
+      - 菜单管理
+  /menu/findByRoleIds/{roleId}:
+    get:
+      description: 主要用于根据角色id查询当前应用的菜单及角色已经用有的菜单信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 应用id
+        in: path
+        name: roleId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据角色id查询当前应用的菜单及角色已经用有的菜单信息
+      tags:
+      - 菜单管理
+  /menu/findTreeList:
+    get:
+      description: 主要用于根据用户权限进行树状菜单查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据用户权限进行菜单查询
+      tags:
+      - 菜单管理
+  /org:
+    delete:
+      description: 主要用于企业或组织删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 删除参数
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除企业或组织
+      tags:
+      - 企业或组织管理
+    post:
+      description: 主要用于岗位添加新增
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 新增岗位添加参数
+        in: body
+        name: org
+        required: true
+        schema:
+          $ref: '#/definitions/common.Post'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 创建岗位添加
+      tags:
+      - 岗位管理
+    put:
+      description: 主要用于岗位修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 新增岗位添加参数
+        in: body
+        name: org
+        required: true
+        schema:
+          $ref: '#/definitions/common.Post'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 岗位修改
+      tags:
+      - 岗位管理
+  /org/findById/{id}:
+    get:
+      description: 根据id查询企业或组织内容详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 企业或组织id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id查询企业或组织内容详情
+      tags:
+      - 企业或组织管理
+  /org/findPageList:
+    post:
+      description: 主要用于查询企业或组织分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-common_OrgParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 企业或组织分页列表
+      tags:
+      - 企业或组织管理
+  /role:
+    delete:
+      description: 主要用于角色删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 角色id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 角色删除
+      tags:
+      - 角色管理
+    post:
+      description: 主要用于角色添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 角色参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Role'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 角色添加
+      tags:
+      - 角色管理
+    put:
+      description: 主要用于角色修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 角色参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.Role'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 角色修改
+      tags:
+      - 角色管理
+  /role/findAuthRoleListByUserId/{userId}:
+    get:
+      description: 根据用户id查询其在应用下的角色及授权信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户id
+        in: path
+        name: userId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据用户id查询其在应用下的角色及授权信息
+      tags:
+      - 角色管理
+  /role/findPageList:
+    post:
+      description: 主要用于角色列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/Request-common_RoleParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/Pager'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/common.Role'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 角色列表查询
+      tags:
+      - 角色管理
+  /sms/{phone}/{type}:
+    get:
+      description: 主要用于发送验证码
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 手机号码
+        in: path
+        name: phone
+        required: true
+        type: string
+      - description: 类型
+        in: path
+        name: type
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 发送验证码
+      tags:
+      - 短信服务
+  /user:
+    delete:
+      description: 主要用于删除用户信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户id
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 删除用户信息
+      tags:
+      - 用户管理
+    post:
+      description: 主要用于添加用户信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户信息数据
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.User'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 添加用户信息
+      tags:
+      - 用户管理
+    put:
+      description: 主要用于修改用户信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户信息
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.User'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改用户信息
+      tags:
+      - 用户管理
+  /user/findBalance:
+    get:
+      description: 主要用于查询用户本人余额信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询用户本人余额信息
+      tags:
+      - 用户管理
+  /user/findById/{id}:
+    get:
+      description: 主要查询用户详情
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 用户id
+        in: query
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询用户详情
+      tags:
+      - 用户管理
+  /user/findDetail:
+    get:
+      description: 主要用于获取用户本人基本信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 获取用户本人基本信息
+      tags:
+      - 用户管理
+  /user/findPageList:
+    post:
+      description: 主要用于查询用户分页列表
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: pageInfo
+        required: true
+        schema:
+          $ref: '#/definitions/common.UserPageAuthQuery'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 用户分页列表
+      tags:
+      - 用户管理
+  /user/findUserIdByUserParam:
+    post:
+      description: 主要用于根据指定条件查询用户id
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 查询参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/common.UserParam'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据指定条件查询用户id
+      tags:
+      - 用户管理
+  /user/findWeChatWebUserInfo:
+    get:
+      description: 主要用于查询微信公众号用户信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 配置id
+        in: query
+        name: confId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 查询微信公众号用户信息
+      tags:
+      - 用户管理
+  /user/logout:
+    get:
+      description: 这是一个用户退出系统登录的接口
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 退出登录
+      tags:
+      - 用户管理
+  /user/updateDetail:
+    post:
+      description: 主要用于修改用户本人基本信息
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 修改用户本人基本信息
+      tags:
+      - 用户管理
+  /userAddress:
+    delete:
+      description: 主要用于用户进行收货地址删除
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 收货地址id集合
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 收货地址删除
+      tags:
+      - 收货地址管理
+    post:
+      description: 主要用于用户进行收货地址添加
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 收货地址新增参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.UserAddress'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 收货地址添加
+      tags:
+      - 收货地址管理
+    put:
+      description: 主要用于用户进行收货地址修改
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 收货地址参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/common.UserAddress'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 收货地址修改
+      tags:
+      - 收货地址管理
+  /userAddress/findById/{id}:
+    get:
+      description: 主要用于收货地址详情查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      - description: 地区id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/Response'
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 根据id收货地址详情查询
+      tags:
+      - 收货地址管理
+  /userAddress/findUserAddressList:
+    get:
+      description: 主要用于收货地址分页列表查询
+      parameters:
+      - default: Bearer token
+        description: 授权令牌
+        in: header
+        name: accessToken
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/common.UserAddress'
+                  type: array
+              type: object
+        "400":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+        "500":
+          description: 请求异常
+          schema:
+            $ref: '#/definitions/Response'
+      summary: 收货地址列表查询
+      tags:
+      - 收货地址管理
+swagger: "2.0"

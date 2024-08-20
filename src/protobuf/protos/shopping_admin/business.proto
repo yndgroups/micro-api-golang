@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package shopping_admin;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message Business {
+  // 商家id
+  string businessId = 1;  // @gotags: gorm:"primary_key;<-:create" gorm:"primary_key;<-:create" validate:"required"
+  // 平台应用
+  string platformAppId = 2;  // @gotags: gorm:"<-:update"
+  // logo地址
+  string logo = 3;  // @gotags: validate:"required"
+  // 商家名称
+  string Name = 4;  // @gotags: validate:"required"
+  // 描述
+  string description = 5;  // @gotags: validate:"required"
+  // 销售额
+  string salesVolume = 6;  // @gotags: gorm:"<-:update"
+  // 背景图地址
+  string BackgroundImg = 7;  // @gotags: gorm:"->;<-:create"
+  // 浏览次数
+  uint64 Views = 8;  // @gotags: gorm:"<-:update"
+  // 商家排序
+  int64 sortBy = 9;  // @gotags: gorm:"<-:update"
+  // 联系人
+  string contacts = 10;  // @gotags: gorm:"->;<-:create"
+  // 联系人电话
+  string telephone = 11;  // @gotags: gorm:"->;<-:create"
+  // 联系人微信
+  string wechat = 12;  // @gotags: gorm:"->;<-:create"
+  // 联系人地址
+  string address = 13;  // @gotags: gorm:"->;<-:create"
+  // 商家结算费率（1按平台[默认]、2自定义）
+  int64 businessSettlement = 14;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"1"
+  // 默认结算率
+  double settlement = 15;  // @gotags: gorm:"<-:update"
+  // 入驻ID（非商家入驻为0，是商家入驻为主键id）
+  string franchiseeId = 16;  // @gotags: gorm:"<-:update"
+  // 银行ID
+  string bankId = 17;  // @gotags: gorm:"<-:update"
+  // 银行卡号
+  string bankCardNo = 18;  // @gotags: gorm:"<-:update"
+  // 银行卡持卡人姓名
+  string bankCardHolder = 19;  // @gotags: gorm:"<-:update"
+  // 备注
+  string remark = 20;  // @gotags: gorm:"<-:update"
+  // 是否开始单独数据展示(0:否[默认]，1：是)
+  int64 isOpenData = 22;  // @gotags: gorm:"<-:update" minimum:"0" maximum:"1" default:"0"
+  // 数据展示类型 2:是自提，3:是核销json格式
+  string expressType = 23;  // @gotags: gorm:"<-:update"
+  // 提现至余额单独设置（1：开启，2：关闭[默认]）
+  int64 aloneExamine = 24;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"2"
+  // 可提现金额至余额提现审核（1：需要[默认]，2：不需要）
+  int64 cashOutExamine = 25;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"1"
+  // 商品审核（1：需要[默认]，2：不需要）
+  int64 goodsExamine = 26;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"1"
+  // 余额提现是否审核（1：需要审核[默认]，2：无需审核）
+  int64 balanceCashOut = 27;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"1"
+  // 销售数据展示权限
+  string salesData = 28;  // @gotags: gorm:"<-:update"
+  // 商家资质;1：展示[默认]，2隐藏
+  string showBusinessQualification = 29;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"1"
+  // 所属代理商id
+  string agentId = 30;  // @gotags: gorm:"<-:update"
+  // 代理后启用，商家余额
+  double money = 31;  // @gotags: gorm:"<-:update"
+  // 是否展示到V1样式（1：是，2：否）
+  int64 isShowV1 = 32;  // @gotags: gorm:"<-:update"
+  // 订单入账后X天可提现（0表示马上可提现）
+  int64 SettlementWithdrawalDay = 33;  // @gotags: gorm:"<-:update"
+  // 同城配送配送费，商家单独设置（1：开启，2：关闭[默认]）
+  int64 isCityDeliveryAlone = 34;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"2"
+  // 同城配送单独设置计费规则
+  string cityDeliveryRule = 35;  // @gotags: gorm:"<-:update"
+  // 上传可选分类（JSON）
+  string categoryIds = 36;  // @gotags: gorm:"<-:update"
+  // 扣款（1：开启，2：关闭[默认]）
+  int64 ChargeOpen = 37;  // @gotags: gorm:"<-:update" minimum:"1" maximum:"2" default:"2"
+  // m_1：1月，m_2：2月......（title：扣款项，money：扣款金额）
+  string chargeData = 38;  // @gotags: gorm:"<-:update"
+  // 欠费金额
+  double arrearsMoney = 39;  // @gotags: gorm:"<-:update"
+  // 扣款起始日期
+  string chargeStartTime = 40;  // @gotags: gorm:"<-:update"
+  // 合伙人id
+  string cid = 41;  // @gotags: gorm:"<-:update"
+  // 商家累积结算金额
+  double settlementMoney = 42;  // @gotags: gorm:"<-:update"
+  // 头条商户id
+  string merchantId = 43;  // @gotags: gorm:"<-:update"
+  // 删除状态
+  bool delStatus = 44;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 45;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 46;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 47;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 48;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message BusinessParam {
+}
+
+message BusinessIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+message BusinessListVo {
+  // 商家logo
+  string logo = 1;
+  // 商家id
+  string businessId = 2;
+  // 商家名称
+  string name = 3;
+  // 商品数量
+  uint64 goodsTotal = 4;
+  // 门店数量
+  int64 storeTotal = 5;
+  // 店员数量
+  int64 clerkTotal = 6;
+  // 是否展示到V1样式（1：是，2：否）
+  int64 isShowV1 = 7;
+  // 创建时间
+  string createTime = 8;
+}
+
+// 分页查询加权参数
+message BusinessPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  BusinessParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message BusinessResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Business detail = 3;  // 详情
+  repeated Business list = 4;  // 列表
+}
+
+// 业务实现
+service BusinessService {
+  // 新增
+  rpc Create(Business) returns (BusinessResponse);
+
+  // 修改
+  rpc Update(Business) returns (BusinessResponse);
+
+  // 删除
+  rpc Delete(BusinessIds) returns (BusinessResponse);
+
+  // 查询 详情
+  rpc FindById(BusinessIds) returns (BusinessResponse);
+
+  // 查询 分页
+  rpc FindPageList(BusinessPageAuthQuery) returns (BusinessResponse);
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>golang 模板案列</title>
+</head>
+<body>
+    <h1>嵌套template语法</h1>
+    <hr>
+    <h3>使用如下技术</h3>
+    <!-- 全局自定义加载的模板 -->
+    {{template "ul.gohtml"}}
+    <hr>
+    <!-- 内部自定义的模板 -->
+    {{template "ol.gohtml"}}
+</body>
+</html>
+<!-- 内部声明模版 -->
+{{define "ol.gohtml"}}
+    <h3>这是一个模版内自定义的无序列表,展示模板列表</h3>
+    <ol>
+        <li>example.gohtml</li>
+        <li>proto.gohtml</li>
+        <li>ul.gohtml</li>
+    </ol>
+{{end}}

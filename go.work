@@ -1,0 +1,15 @@
+go 1.21.1
+
+toolchain go1.21.3
+
+use (
+	./src/common
+	./src/core
+	./src/generator
+	./src/order
+	./src/protobuf
+	./src/resources
+	./src/shopping-admin
+	./src/shopping-client
+	./test
+)

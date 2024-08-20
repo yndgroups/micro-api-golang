@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message ProductAttr {
+  // 属性id
+  string attrId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 商品id
+  string productId = 2;  // @gotags:
+  // 属性名
+  string attrName = 3;  // @gotags:
+  // 属性值
+  string attrValues = 4;  // @gotags:
+  // 活动类型(0:商品 1:秒杀 2:砍价 3:拼团)
+  int64 attrType = 5;  // @gotags:
+  // 删除状态
+  bool delStatus = 6;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 7;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 8;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 9;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 10;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message ProductAttrParam {
+}
+
+message ProductAttrIds {
+  repeated string attrId = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message ProductAttrPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  ProductAttrParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message ProductAttrResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  ProductAttr detail = 3;  // 详情
+  repeated ProductAttr list = 4;  // 列表
+}
+
+// 业务实现
+service ProductAttrService {
+  // 新增
+  rpc Create(ProductAttr) returns (ProductAttrResponse);
+
+  // 修改
+  rpc Update(ProductAttr) returns (ProductAttrResponse);
+
+  // 删除
+  rpc Delete(ProductAttrIds) returns (ProductAttrResponse);
+
+  // 查询 详情
+  rpc FindById(ProductAttrIds) returns (ProductAttrResponse);
+
+  // 查询 分页
+  rpc FindPageList(ProductAttrPageAuthQuery) returns (ProductAttrResponse);
+}

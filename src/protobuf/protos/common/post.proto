@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message Post {
+  // 岗位id
+  string postId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 岗位编码
+  string postCode = 2;  // @gotags: validate:"required"
+  // 岗位名称
+  string postName = 3;  // @gotags: validate:"required"
+  // 岗位介绍或备注
+  string introduce = 4;
+  // 状态（1正常[默认] 0停用）
+  int64 status = 5;
+  // 显示顺序
+  int64 sortBy = 6;
+  // 删除状态
+  bool delStatus = 7;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 8;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 9;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 10;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 11;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message PostParam {
+  // 岗位编码
+  string postCode = 1;  // @gotags: validate:"required"
+  // 岗位名称
+  string postName = 2;  // @gotags: validate:"required"
+  // 岗位介绍或备注
+  string introduce = 3;
+}
+
+message PostIds {
+  repeated string postIds = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message PostPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  PostParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message PostResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Post detail = 3;  // 详情
+  repeated Post list = 4;  // 列表
+}
+
+// 业务实现
+service PostService {
+  // 新增
+  rpc Create(Post) returns (PostResponse);
+
+  // 修改
+  rpc Update(Post) returns (PostResponse);
+
+  // 删除
+  rpc Delete(PostIds) returns (PostResponse);
+
+  // 查询 详情
+  rpc FindById(PostIds) returns (PostResponse);
+
+  // 查询岗位列表
+  rpc FindList(PostPageAuthQuery) returns (PostResponse);
+
+  // 查询 分页
+  rpc FindPageList(PostPageAuthQuery) returns (PostResponse);
+}

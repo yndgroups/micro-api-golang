@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message BusinessBalanceApply {
+  // 删除状态
+  bool delStatus = 1;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0"
+                       // maximum:"1" default:"0"
+  // 创建人
+  string createBy = 2;  // @gotags: gorm:"->;<-:create" swaggerignore:"true"
+                        // minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 3;  // @gotags: gorm:"->;<-:update" swaggerignore:"true"
+                        // minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 4;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 5;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message BusinessBalanceApplyParam { }
+
+message BusinessBalanceApplyIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message BusinessBalanceApplyPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  BusinessBalanceApplyParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message BusinessBalanceApplyResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  BusinessBalanceApply detail = 3;  // 详情
+  repeated BusinessBalanceApply list = 4;  // 列表
+}
+
+// 业务实现
+service BusinessBalanceApplyService {
+  // 新增
+  rpc Create(BusinessBalanceApply) returns (BusinessBalanceApplyResponse);
+
+  // 修改
+  rpc Update(BusinessBalanceApply) returns (BusinessBalanceApplyResponse);
+
+  // 删除
+  rpc Delete(BusinessBalanceApplyIds) returns (BusinessBalanceApplyResponse);
+
+  // 查询 详情
+  rpc FindById(BusinessBalanceApplyIds) returns (BusinessBalanceApplyResponse);
+
+  // 查询 分页
+  rpc FindPageList(BusinessBalanceApplyPageAuthQuery) returns (BusinessBalanceApplyResponse);
+}
+
+// // BusinessBalanceApply 商家余额提现申请
+// type BusinessBalanceApply struct {
+// 	cmodel.BaseModel
+// 	// 余额提现申请id
+// 	BalanceApplyId string `gorm:"primary_key;<-:create"
+// json:"balanceApplyId"`
+// 	// 商家id
+// 	BusinessId string `json:"businessId"`
+// 	// 申请用户id
+// 	UserId string `json:"userId"`
+// 	// 余额
+// 	Balance string `json:"balance"`
+// 	// 平台应用id
+// 	PlatformAppId string `json:"platformAppId"`
+// 	// 提现方式(wechat:微信 alipay:支付宝 card:银行卡）
+// 	WithdrawalType string `json:"withdrawalType"`
+// 	// 提现账户名称
+// 	WithdrawalAccountName string `json:"withdrawalAccountName"`
+// 	// 提现帐户(微信号,支付宝账号,银行卡号)
+// 	WithdrawalAccount string `json:"withdrawalAccount"`
+// 	// 审核状态(0:待审核[默认] 1:申请通过 2:已拒绝 3已打款)
+// 	Status int `json:"status"`
+// 	// 驳回原因
+// 	Reason string `json:"reason"`
+// 	// 银行名称
+// 	BankName int `json:"bankName"`
+// 	// 是否已打款(0:未打款[默认] 1:已打款 2:标记已打款)
+// 	IsPayment int `json:"isPayment"`
+// 	// 渠道信息(1:导入 2:微信小程序 3:H5 4:公众号 5:安卓 6:苹果
+// 7:支付宝小程序 8:百度小程序 9:头条/字节跳动小程序） 	Channel int
+// `json:"channel"`
+// 	// 所属代理商id
+// 	AgentId string `json:"agentId"`
+// 	// 合伙人id
+// 	PartnerId float64 `json:"partnerId"`
+// }

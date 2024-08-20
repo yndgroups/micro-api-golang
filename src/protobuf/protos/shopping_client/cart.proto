@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package shopping_client;
+
+option go_package = "build/shopping_client";
+
+// Cart 购物车
+message Cart {
+  // 购物车id
+  string cartId = 1;  // @gotags: `gorm:"primary_key;<-:create;column:cart_id"`
+  // 商品id
+  string productId = 2;  // @gotags: `validate:"required" gorm:"<-;column:product_id"`
+  // 规格(1:单规格 2:多规格)
+  int64 specType = 3;  // @gotags: `validate:"required" gorm:"<-;column:spec_type"`
+  // 商品属性
+  string productAttrUnique = 4;  // @gotags: `validate:"required" gorm:"<-;column:product_attr_unique"`
+  // 商品数量
+  int64 quantity = 5;  // @gotags: `validate:"required" gorm:"<-;column:quantity"`
+  // 拼团id
+  string groupBuyId = 6;  // @gotags: `gorm:"column:group_buy_id;default:null"`
+  // 秒杀商品id
+  string seckillId = 7;  // @gotags: `gorm:"column:seckill_id;default:null"`
+  // 砍价id
+  string bargainId = 8;  // @gotags: `gorm:"column:bargain_id;default:null"`
+  // 预售商品id
+  string presaleId = 9;  // @gotags: `gorm:"column:presale_id;default:null"`
+  // 状态
+  int64 status = 10;  // @gotags: `gorm:"column:status"`
+  // 删除状态
+  bool delStatus = 11;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 12;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 13;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 14;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 15;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 商品图片
+  string image = 16;  // @gotags: `validate:"required" gorm:"<-;column:image"`
+}
+
+message CartListVo {
+  // 购物车id
+  string cartId = 1;
+  // 商品id
+  string productId = 2;
+  // 规格(1:单规格 2:多规格)
+  int64 specType = 3;
+  // 商品属性
+  string productAttrUnique = 4;
+  // 商品数量
+  int64 quantity = 5;
+  // 状态
+  int64 status = 6;
+  // 创建时间
+  string createTime = 7;
+  // 商品名称
+  string productName = 8;
+  // 商品图片
+  string image = 9;
+  // 价格
+  double price = 10;
+}
+
+message CartIds {
+  // 购物车id
+  repeated string cartIds = 1;
+  // 用户id
+  string userId = 2;
+  // 商品数量
+  int64 quantity = 3;
+}
+
+// 分页查询加权参数
+message CartPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;  // @gotags: `default:"1"`
+  // 分页长度
+  int64 pageSize = 2;  // @gotags: `default:"10"`
+  // 用户id
+  string userId = 3;  // @gotags: `swaggerignore:"true"`
+}
+
+// 返回结果
+message CartResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Cart detail = 3;  // 详情
+  repeated CartListVo list = 4;  // 列表
+}
+
+// 业务实现
+service CartService {
+  // 新增
+  rpc Create(Cart) returns (CartResponse);
+
+  // 删除
+  rpc Delete(CartIds) returns (CartResponse);
+
+  // 查询分页
+  rpc FindPageList(CartPageAuthQuery) returns (CartResponse);
+
+  // 查询购物车数量
+  rpc FindCount(CartIds) returns (CartResponse);
+
+  // 修改购物车商品数量
+  rpc ChangeQuantity(CartIds) returns (CartResponse);
+}

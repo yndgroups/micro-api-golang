@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message WebsiteStated {
+  // 声明主键id
+  string stateId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 属于某个应用的声明（关联appId）
+  string appId = 2;  // @gotags: gorm:"<-" validate:"required"
+  // 类型（1：网站声明永远只有一条， 2：其他相关内容比如操作手册）
+  string stateType = 3;  // @gotags: gorm:"<-" validate:"required"
+  // 声明标题
+  string title = 4;  // @gotags: gorm:"<-" validate:"required"
+  // 声明内容
+  string content = 5;  // @gotags: gorm:"<-" validate:"required"
+  // 删除状态
+  bool delStatus = 6;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 7;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 8;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 9;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 10;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message WebsiteStatedParam {
+  // 标题
+  string title = 1;
+  // 内容关键词
+  string content = 2;
+}
+
+message WebsiteStatedIds {
+  repeated string stateId = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message WebsiteStatedPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  WebsiteStatedParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message WebsiteStatedResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  WebsiteStated detail = 3;  // 详情
+  repeated WebsiteStated list = 4;  // 列表
+}
+
+// 业务实现
+service WebsiteStatedService {
+  // 新增
+  rpc Create(WebsiteStated) returns (WebsiteStatedResponse);
+
+  // 修改
+  rpc Update(WebsiteStated) returns (WebsiteStatedResponse);
+
+  // 删除
+  rpc Delete(WebsiteStatedIds) returns (WebsiteStatedResponse);
+
+  // 查询 详情
+  rpc FindById(WebsiteStatedIds) returns (WebsiteStatedResponse);
+
+  // 查询 分页
+  rpc FindPageList(WebsiteStatedPageAuthQuery) returns (WebsiteStatedResponse);
+}

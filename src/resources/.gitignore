@@ -1,0 +1,14 @@
+### VS Code ###
+.vscode/
+.idea/
+/.idea/
+
+### go env ###
+bin/
+/bin/
+pkg/
+/pkg/
+
+### 忽略临时文件夹目录 ###
+/**/vendor/
+/**/tmp/

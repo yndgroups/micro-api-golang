@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package cms;
+
+option go_package = "build/cms";
+import "protos/global/global.proto";
+
+message SysAdmin {
+    // 管理员id
+    int64 UserId = 1;
+    // 用户名
+    string UserName = 2;
+    // 密码
+    string UserPassword = 3;
+    // 加密盐
+    int64 Salt = 4;
+    // 电话号码
+    string Phone = 5;
+    // 邮箱
+    string Email = 6;
+    // 微信的openId
+    string OpenId = 7;
+    // 账号状态(1:启用(审核通过)[默认] 2:禁用 3:待审核)
+    int64 Status = 8;
+    // 禁用原因
+    string ReasonsProhibition = 9;
+    // 帐号类型（1：个人账户，2：企业）
+    int64 AccountType = 10;
+    // 帐号来源分类(1:后台端 2:前端 3: 微信）
+    int64 RegType = 11;
+    // 帐号来源某个应用的appId
+    string SourceId = 12;
+    // 是否删除(0:否[默认] 1:删除）
+    int64 DelStatus = 13;
+    // 创建者
+    int64 CreateBy = 14;
+    // 更新者
+    int64 UpdateBy = 15;
+    // 创建时间
+    string CreateTime = 16;
+    // 更新时间
+    string UpdateTime = 17;
+}
+
+// 业务实现
+service SysAdminService {
+
+  // 新增
+  rpc Create (SysAdmin) returns (SysAdminResponse);
+
+  // 修改
+  rpc Update (SysAdmin) returns (SysAdminResponse);
+
+  // 删除
+  rpc Delete (SysAdminIds) returns (SysAdminResponse);
+
+  // 查询 详情
+  rpc FindById (SysAdminIds) returns (SysAdminResponse);
+
+  // 查询 分页
+  rpc FindPageList (SysAdminPageAuthQuery) returns (SysAdminResponse);
+
+}

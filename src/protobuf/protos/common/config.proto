@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message Config {
+  // 配置id
+  string confId = 1;  // @gotags: gorm:"primary_key;<-:create" json:"confId"
+  // 配置类型: 1小程序 2公众号
+  int64 confType = 2;  // @gotags: json:"confType"
+  // 应用id
+  string appId = 3;  // @gotags: json:"appId"
+  // 外部来源id
+  string outsideAppId = 4;  // @gotags: json:"outsideAppId"
+  // 外部来源名称
+  string outsideAppName = 5;  // @gotags: json:"outsideAppName"
+  // 外部来源秘钥
+  string outsideAppSecret = 6;  // @gotags: json:"outsideAppSecret"
+  // 支付商户号
+  string mchId = 7;  // @gotags: json:"mchId"
+  // 私人密钥
+  string paterNerKey = 8;  // @gotags: json:"paterNerKey"
+  // 电话号码
+  string phone = 9;  // @gotags: json:"phone"
+  // 邮箱
+  string email = 10;  // @gotags: json:"email"
+  // 同步回调地址
+  string returnUrl = 11;  // @gotags: json:"returnUrl"
+  // 异步回调地址
+  string notifyUrl = 12;  // @gotags: json:"notifyUrl"
+  // 公众号用于调用微信JS接口的临时票据
+  string jsApiTicket = 13;  // @gotags: json:"jsApiTicket"
+  // Token可以由开发者任意填写，用作生成签名（该Token会配置在服务器中和接口URL中包含的Token进行比对，从而验证安全性）。
+  string token = 14;  // @gotags: json:"token"
+  // 默认支付金额
+  double amount = 15;  // @gotags: json:"amount"
+  // 消息格式化（比如：JSON）
+  string msgDataFormat = 16;  // @gotags: json:"msgDataFormat"
+  // 商户证书的证书序列号
+  string serialNo = 17;  // @gotags: json:"serialNo"
+  // apiV2Key，商户平台获取
+  string apiV2Key = 19;  // @gotags: json:"apiV2Key"
+  // apiV3Key，商户平台获取
+  string apiV3Key = 20;  // @gotags: json:"apiV3Key"
+  // 私钥
+  string privateKey = 21;  // @gotags: json:"PrivateKey"
+  // EncodingAESKey由开发者手动填写或随机生成，将用作消息体加解密密钥。（43位）
+  string aesKey = 22;  // @gotags: json:"aesKey"
+  // 时间戳
+  int64 timestamp = 23;  // @gotags: json:"timestamp"
+  // 删除状态
+  bool delStatus = 24;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 25;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 26;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 27;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 28;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message ConfigExpand {
+  // 配置id
+  string confId = 1;
+  // 配置类型 1小程序 2公众号
+  int64 confType = 2;
+  // 应用id
+  string appId = 3;
+  // 来源id
+  string outsideAppId = 4;
+  // 应用名称
+  string outsideAppName = 5;
+  // 秘钥
+  string outsideAppSecret = 6;
+  // 支付商户号
+  string mchId = 7;
+  // 私人密钥
+  string paterNerKey = 8;
+  // 电话号码
+  string phone = 9;
+  // 邮箱
+  string email = 10;
+  // 同步回调地址
+  string returnUrl = 11;
+  // 异步回调地址
+  string notifyUrl = 12;
+  // 公众号用于调用微信JS接口的临时票据
+  string jsApiTicket = 13;
+  // Token可以由开发者任意填写，用作生成签名（该Token会配置在服务器中和接口URL中包含的Token进行比对，从而验证安全性）。
+  string token = 14;
+  // 默认支付金额
+  double amount = 15;
+  // 消息格式化（比如：JSON）
+  string msgDataFormat = 16;
+  // 商户证书的证书序列号
+  string serialNo = 17;
+  // apiV2Key，商户平台获取
+  string apiV2Key = 19;
+  // apiV3Key，商户平台获取
+  string apiV3Key = 20;
+  // 私钥
+  string privateKey = 21;
+  // EncodingAESKey由开发者手动填写或随机生成，将用作消息体加解密密钥。（43位）
+  string aesKey = 22;
+  // 时间戳
+  int64 timestamp = 23;
+}
+
+message ConfigParam {
+  // 配置id
+  string confIds = 1;
+  // 应用id
+  string appId = 2;
+}
+
+message ConfigIds {
+  repeated string confIds = 1;
+  repeated string storeIds = 2;
+  string userId = 3;
+  string appId = 4;
+}
+
+// 分页查询加权参数
+message ConfigPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  ConfigParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message ConfigResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Config detail = 3;  // 详情
+  repeated Config list = 4;  // 列表
+}
+
+// 业务实现
+service ConfigService {
+  // 新增配置
+  rpc Create(Config) returns (ConfigResponse);
+
+  // 修改配置
+  rpc Update(Config) returns (ConfigResponse);
+
+  // 删除配置
+  rpc Delete(ConfigIds) returns (ConfigResponse);
+
+  // 查询配置详情
+  rpc FindById(ConfigIds) returns (ConfigResponse);
+
+  // 根据参数查询配置详情
+  rpc FindByConfigExpandParam(ConfigIds) returns (ConfigResponse);
+
+  // 查询配置分页
+  rpc FindPageList(ConfigPageAuthQuery) returns (ConfigResponse);
+}

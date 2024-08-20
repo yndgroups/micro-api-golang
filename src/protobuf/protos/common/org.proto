@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message Org {
+  // 组织id
+  string orgId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 创建类型：1:后台管理员添加 2:自己注册
+  int64 createType = 2;  // @gotags gorm:"<-"
+  // 企业名称
+  string name = 3;  // @gotags gorm:"<-" validate:"required"
+  // 企业logo
+  string logo = 4;
+  // 统一社会信用代码
+  string creditCode = 5;
+  // 注册地址
+  string registerAddress = 6;  // @gotags gorm:"<-" validate:"required"
+  // 企业注册号
+  string registerNo = 7;
+  // 企业营业执照地址
+  string licensePhotoUrl = 8;  // @gotags gorm:"<-" validate:"required"
+  // 法人
+  string legalPerson = 9;  // @gotags gorm:"<-" validate:"required"
+  // 法人介绍地址
+  string legalPersonUrl = 10;  // @gotags gorm:"<-" validate:"required"
+  // 法人身份证正面地址
+  string legalPersonCardPurl = 11;  // @gotags gorm:"<-" validate:"required"
+  // 法人身份证反面地址
+  string legalPersonCardBurl = 12;  // @gotags gorm:"<-" validate:"required"
+  // 联系人
+  string contactPerson = 13;  // @gotags gorm:"<-" validate:"required"
+  // 联系电话
+  string contactNumber = 14;  // @gotags gorm:"<-" validate:"required"
+  // 联系邮箱
+  string contactEmail = 15;  // @gotags gorm:"<-" validate:"required"
+  // 公司规模
+  string scale = 16;  // @gotags gorm:"<-"
+  // 人员规模最小人数
+  int64 scalePersonMin = 17;  // @gotags gorm:"<-"
+  // 人工规模最大人数，-1 为以上
+  int64 scalePersonMax = 18;  // @gotags gorm:"<-"
+  // 企业性质 多个使用-分割
+  string nature = 19;  // @gotags gorm:"<-"
+  // 企业浏览量
+  uint64 views = 20;  // @gotags gorm:"->"
+  // 行业类别id，多个使用-分割
+  string industryIds = 21;  // @gotags gorm:"<-"
+  // 公司福利 使用-分割
+  string benefits = 22;  // @gotags gorm:"<-"
+  // 公司特点 使用-分割
+  string characteristic = 23;  // @gotags gorm:"<-"
+  // 描述
+  string description = 29;  // @gotags gorm:"<-"
+  // 岗位数量
+  int64 jobNum = 30;  // @gotags gorm:"<-"
+  // 联系邮箱
+  string email = 31;  // @gotags gorm:"<-"
+  // 省代码
+  string areaCode = 32;  // @gotags gorm:"<-"
+  // 地质详情 比如多少栋楼多少号
+  string addrDetail = 33;  // @gotags gorm:"<-"
+  // 公司经度
+  string lng = 34;  // @gotags gorm:"<-"
+  // 公司纬度
+  string lat = 35;  // @gotags gorm:"<-"
+  // 企业状态 1:待审核 2:审核失败 3:审核成功 4:再次提交
+  int64 auditStatus = 36;  // @gotags gorm:"<-:update"
+  // 审核消息
+  string auditDescription = 37;  // @gotags gorm:"<-"
+  // 是否为推荐企业或组织 1是 2不是
+  int64 isRecommend = 38;  // @gotags gorm:"<-"
+  // 推荐企业显示排序
+  int64 recommendSort = 39;  // @gotags gorm:"<-"
+  // 是否为行业巨头或组织 1是 2不是
+  int64 isIndustryGiant = 40;  // @gotags gorm:"<-"
+  // 行业巨头显示排序
+  int64 industrySort = 41;  // @gotags gorm:"<-"
+  // 是否为热门企业 1 是 0不是
+  int64 isHot = 42;  // @gotags gorm:"<-"
+  // 热门企业或组织显示排序
+  int64 hotSort = 43;  // @gotags gorm:"<-"
+  // 删除状态
+  bool delStatus = 44;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 45;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 46;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 47;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 48;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message OrgParam {
+  // 组织或企业名称
+  string name = 1;
+  // 法人
+  string legalPerson = 2;
+  // 联系人
+  string contactPerson = 3;
+}
+
+message OrgIds {
+  repeated string OrgIds = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message OrgPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  OrgParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message OrgResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Org detail = 3;  // 详情
+  repeated Org list = 4;  // 列表
+}
+
+// 业务实现
+service OrgService {
+  // 新增
+  rpc Create(Org) returns (OrgResponse);
+
+  // 修改
+  rpc Update(Org) returns (OrgResponse);
+
+  // 删除
+  rpc Delete(OrgIds) returns (OrgResponse);
+
+  // 查询 详情
+  rpc FindById(OrgIds) returns (OrgResponse);
+
+  // 查询 分页
+  rpc FindPageList(OrgPageAuthQuery) returns (OrgResponse);
+}

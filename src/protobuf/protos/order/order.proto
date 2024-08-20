@@ -1,0 +1,379 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "build/order";
+
+import "protos/global/global.proto";
+import "protos/order/order_detail.proto";
+
+// Order 订单信息
+message Order {
+  // 订单id
+  string orderId = 1;  // @gotags: `gorm:"primary_key;<-:create"`
+  // 父类订单id
+  string parentId = 2;  // @gotags: `gorm:"<-:create"`
+  // 配置id
+  string confId = 3;  // @gotags: `gorm:"<-:create"`
+  // 订单号
+  string orderNo = 4;  // @gotags: `gorm:"<-:create"`
+  // 交易类型(1:微信 2:支付宝)
+  int64 tradeType = 5;  // @gotags: `gorm:"<-:create"`
+  // 下单号
+  string tradeNo = 6;  // @gotags: `gorm:"<-:create"`
+  // 支付状态
+  int64 payStatus = 7;  // @gotags: `gorm:"<-"`
+  // 用户姓名
+  string realName = 8;  // @gotags: `gorm:"<-:create"`
+  // 用户电话
+  string userPhone = 9;  // @gotags: `gorm:"<-:create"`
+  // 详细地址
+  string userAddress = 10;  // @gotags: `gorm:"<-:create"`
+  // 运费金额
+  double freightPrice = 11;  // @gotags: `gorm:"<-:create"`
+  // 订单商品总数
+  int64 totalQuantity = 12;  // @gotags: `gorm:"<-:create"`
+  // 订单总价
+  double totalPrice = 13;  // @gotags: `gorm:"<-:create"`
+  // 邮费
+  double totalPostage = 14;  // @gotags: `gorm:"<-:create"`
+  // 实际支付金额
+  double payPrice = 15;  // @gotags: `gorm:"<-:create"`
+  // 支付时间
+  string payTime = 16;  // @gotags: gorm:"-"`
+  // 支付类型(1:直接支付 2:余额支付)
+  int64 payType = 17;  // @gotags: gorm:"<-:create"`
+  // 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+  int64 status = 18;  // @gotags: gorm:"-"`
+  // 删除状态
+  bool delStatus = 19;  // @gotags: `gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"`
+  // 创建人
+  string createBy = 20;  // @gotags: `gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 修改人
+  string updateBy = 21;  // @gotags: `gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"`
+  // 创建时间
+  string createTime = 22;  // @gotags: `gorm:"->" swaggerignore:"true"`
+  // 修改时间
+  string updateTime = 23;  // @gotags: `gorm:"->" swaggerignore:"true"`
+}
+
+// OrderListVo 订单列表
+message OrderListVo {
+  // 订单id
+  string orderId = 1;
+  // 父类订单id
+  string parentId = 2;
+  // 配置id
+  string confId = 3;
+  // 配置id
+  string confIdName = 4;
+  // 订单号
+  string orderNo = 5;
+  // 交易类型(1:微信 2:支付宝)
+  int64 tradeType = 6;
+  // 交易类型名称
+  string tradeTypeName = 7;
+  // 下单号
+  string tradeNo = 8;
+  // 支付状态
+  int64 payStatus = 9;
+  // 支付状态
+  string payStatusName = 10;
+  // 用户姓名
+  string realName = 11;
+  // 用户电话
+  string userPhone = 12;
+  // 详细地址
+  string userAddress = 13;
+  // 运费金额
+  double freightPrice = 14;
+  // 订单商品总数
+  uint64 totalQuantity = 15;
+  // 订单总价
+  double totalPrice = 16;
+  // 邮费
+  double totalPostage = 17;
+  // 实际支付金额
+  double payPrice = 18;
+  // 支付时间
+  string payTime = 19;
+  // 支付类型(1:直接支付 2:余额支付)
+  int64 payType = 20;
+  // 支付类型名称
+  string payTypeName = 21;
+  // 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+  int64 status = 22;
+  // 状态名称
+  string statusName = 23;
+  // 删除状态
+  bool delStatus = 24;
+  // 创建人
+  string createBy = 25;
+  // 修改人
+  string updateBy = 26;
+  // 创建时间
+  string createTime = 27;
+  // 修改时间
+  string updateTime = 28;
+}
+
+// OrderDetailVo 订单详情
+message OrderDetailVo {
+  // 订单id
+  string orderId = 1;
+  // 父类订单id
+  string parentId = 2;
+  // 配置id
+  string confId = 3;
+  // 配置id
+  string confIdName = 4;
+  // 订单号
+  string orderNo = 5;
+  // 交易类型(1:微信 2:支付宝)
+  int64 tradeType = 6;
+  // 交易类型名称
+  string tradeTypeName = 7;
+  // 下单号
+  string tradeNo = 8;
+  // 支付状态
+  int64 payStatus = 9;
+  // 支付状态
+  string payStatusName = 10;
+  // 用户姓名
+  string realName = 11;
+  // 用户电话
+  string userPhone = 12;
+  // 详细地址
+  string userAddress = 13;
+  // 运费金额
+  double freightPrice = 14;
+  // 订单商品总数
+  int64 totalQuantity = 15;
+  // 订单总价
+  double totalPrice = 16;
+  // 邮费
+  double totalPostage = 17;
+  // 实际支付金额
+  double payPrice = 18;
+  // 支付时间
+  string payTime = 19;
+  // 支付类型(1:直接支付 2:余额支付)
+  int64 payType = 20;
+  // 支付类型名称
+  string payTypeName = 21;
+  // 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+  int64 status = 22;
+  // 状态名称
+  string statusName = 23;
+  // 删除状态
+  bool delStatus = 24;
+  // 创建人
+  string createBy = 25;
+  // 修改人
+  string updateBy = 26;
+  // 创建时间
+  string createTime = 27;
+  // 修改时间
+  string updateTime = 28;
+  // 商品列表
+  repeated order.OrderDetail productList = 29;  // @gotags: gorm:"-"
+}
+
+// OrderIds 订单id参数
+message OrderIds {
+  // 订单id
+  repeated string orderId = 1;
+  // 订单号
+  string orderNo = 2;
+  // 下单号
+  string tradeNo = 3;
+  // 用户id
+  string userId = 4;
+}
+
+// OrderParams 订单查询参数
+message OrderParams {
+  // 订单号
+  string orderNo = 1;
+  // 下单号
+  string tradeNo = 2;
+  // 订单状态(1:待付款[默认] 2:待发货 3:已发货 4:待收货 5:已收货 6:待评价 7:订单关闭)
+  int64 payStatus = 3;
+  // 下单电话号码
+  string userPhone = 4;
+}
+
+// OrderMobileParams 移动端查询条件参数
+message OrderMobileParams {
+  // 订单号
+  string orderNo = 1;
+  // 查询类型 1:个人订单查询 2:管理员订单查询
+  int64 findType = 2;
+}
+
+// OrderPageAuthQuery 分页查询条件
+message OrderPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  OrderParams params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"
+}
+
+// SaveOrder 创建订单
+message SaveOrder {
+  // 商品信息
+  repeated OrderDetail orderDetails = 1;
+  // 订单信息
+  Order order = 2;
+}
+
+// UpdateOrderParam 更新订单参数
+message UpdateOrderParam {
+  // 订单类型 1: 充值订单 2：商品订单
+  int64 orderType = 1;
+  // 订单号
+  string outTradeNo = 2;
+  // 支付金额
+  string payAmount = 3;
+}
+
+// CreateOrderParams 创建订单参数
+message CreateOrderParams {
+  // 商品参数列表
+  string AddressId = 1;  // @gotags: validate:"required"
+  // 商品参数列表
+  repeated global.ProductParam productList = 2;  // @gotags: validate:"required"
+  // 支付类型 1:直接支付 2:余额支付
+  int64 payType = 3;  // @gotags: validate:"required" minimum:"1" maximum:"2" default:"1"
+  // 交易类型(1:微信 2:支付宝)
+  int64 tradeType = 4;  // @gotags: validate:"required" minimum:"1" maximum:"2" default:"1"
+}
+
+// PriceCount 订单计算参数
+message PriceCount {
+  // 商品id
+  string productId = 1;
+  // 购买数量
+  string quantity = 2;
+  // 商品价格
+  string price = 3;
+}
+
+message PayOrderParam {
+  // 订单id
+  string orderId = 1;  // @gotags: validate:"required"`
+  // 交易类型(1:余额 2:微信  3:支付宝)
+  int64 tradeType = 2;  // @gotags: validate:"required"`
+  // 支付类型(1:微信公众号 2:微信小程序 3:支付宝支付)
+  int64 payType = 3;  // @gotags: validate:"required"`
+  // 支付密码[余额支付时必传]
+  string payPwd = 4;
+  // 支付标识必传
+  string payMark = 5;  // @gotags: validate:"required"`
+}  // @name PayOrderParam 订单支付参数
+
+// RefundParam 退货请求参数
+message RefundParam {
+  // 订单号
+  string tradeNo = 1;
+  // 配置id
+  string confId = 2;
+  // 退款原因
+  string reason = 3;
+}
+
+// ProductPriceCount 商品价格计算
+message ProductPriceCount {
+  // 商品id
+  string productId = 1;
+  // 商品数量
+  int64 quantity = 2;
+  // 商品价格
+  double price = 3;
+}
+
+// OrderBaseInfo 订单基础参数
+message OrderBaseInfo {
+  // 用户id
+  string userId = 1;
+  // 订单号
+  string orderNo = 2;
+}
+
+// OrderMsg 订单推送消息
+message OrderMsg {
+  // 收货姓名
+  string realName = 1;
+  // 收货电话
+  string userPhone = 2;
+  // 收货地址
+  string userAddress = 3;
+  // 商品名称
+  string productName = 4;
+  // 商品价格
+  string  price = 5;
+  // 商品数量
+  string quantity = 6;
+}
+
+// 订单统计参数
+message OrderStatistics {
+  int64 total = 1; // @gotags: `json:"total"`
+  int64 daifukuan = 2; // @gotags: `json:"daifukuan"`
+  int64 daifahuo = 3; // @gotags: `json:"daifahuo"`
+  int64 yifahuo = 4; // @gotags: `json:"yifahuo"`
+  int64 daishouhuo = 5; // @gotags: `json:"daishouhuo"`
+  int64 yishouhuo = 6; // @gotags: `json:"yishouhuo"`
+  int64 daipinjia = 7; // @gotags: `json:"daipinjia"`
+  int64 dingdanguanbi = 8; // @gotags: `json:"dingdanguanbi"`
+}
+
+// OrderResponse 订单返回数据
+message OrderResponse {
+  // 数据量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 详情
+  OrderDetailVo detail = 3;
+  // 列表
+  repeated OrderListVo list = 4;
+  // 订单基础信息
+  OrderBaseInfo OrderBaseInfo = 5;
+  // 订单统计
+  OrderStatistics OrderStatistics = 6;
+  // 商品推送信息列表
+  repeated OrderMsg OrderMsgList = 7;
+}
+
+// OrderService 订单接口
+service OrderService {
+
+  // Delete 订单删除
+  rpc Delete(OrderIds) returns (OrderResponse);
+
+  // FindPageList 查询订单分页列表
+  rpc FindPageList(OrderPageAuthQuery) returns (OrderResponse);
+
+  // FindById 查询订单
+  rpc FindById(OrderIds) returns (OrderResponse);
+
+  // FindByParams 根据参数查询订单
+  rpc FindByParams(OrderParams) returns (OrderResponse);
+
+  // Save 保存订单信息
+  rpc Save(SaveOrder) returns (OrderResponse);
+
+  // Update 更新订单状态
+  rpc Update(UpdateOrderParam) returns (OrderResponse);
+
+  // BalancePayment 余额支付
+  rpc BalancePayment(OrderIds) returns (OrderResponse);
+
+  // OrderStatistics 订单统计
+  rpc OrderStatistics(OrderBaseInfo) returns (OrderResponse);
+}

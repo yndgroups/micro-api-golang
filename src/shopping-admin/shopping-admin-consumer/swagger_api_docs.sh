@@ -1,0 +1,1 @@
+swag init -d ./,../../core/model,../../core/req,../../core/resp,../../protobuf/build/shopping_admin

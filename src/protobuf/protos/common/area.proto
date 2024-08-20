@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message Area {
+  // 主键id
+  string areaId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 父级代码
+  string parentCode = 2;  // @gotags: validate:"required"`
+  // 地区码
+  string areaCode = 3;  // @gotags: validate:"required"`
+  // 地区名称
+  string areaName = 4;  // @gotags: validate:"required"`
+  // 地区名称全称
+  string fullAreaName = 5;  // @gotags: validate:"required"`
+  // 区划等级
+  int64 areaTag = 6;
+  // 年份
+  int64 year = 7;
+  // 匹配条件
+  int64 isStandard = 8;
+  // 删除状态
+  bool delStatus = 9;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 10;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 11;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 12;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 13;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message AreaParam {
+  // 地区码
+  string areaCode = 1;
+  // 地区名称
+  string areaName = 2;
+}
+
+message AreaIds {
+  repeated string areaIds = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message AreaPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  AreaParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;
+}
+
+message AreaListVo {
+}
+
+message AreaTags {
+  int64 areaTag = 1;
+}
+
+message AreaTree {
+  // 父级代码
+  string parentCode = 1;
+  // 地区码
+  string areaCode = 2;
+  // 地区名称
+  string areaName = 3;
+  // 地区名称全称
+  int64 AreaTag = 4;
+  // 子集
+  repeated AreaTree children = 5;  // @gotags:  gorm:"-"`
+}
+
+// 返回结果
+message AreaResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  Area detail = 3;  // 详情
+  repeated Area list = 4;  // 列表
+  repeated AreaTree treeList = 5;
+}
+
+// 业务实现
+service AreaService {
+  // 新增
+  rpc Create(Area) returns (AreaResponse);
+
+  // 修改
+  rpc Update(Area) returns (AreaResponse);
+
+  // 删除
+  rpc Delete(AreaIds) returns (AreaResponse);
+
+  // 查询 详情
+  rpc FindById(AreaIds) returns (AreaResponse);
+
+  // 查询 分页
+  rpc FindPageList(AreaPageAuthQuery) returns (AreaResponse);
+
+  // 查询三级地区
+  rpc FindTree(AreaTags) returns (AreaResponse);
+}

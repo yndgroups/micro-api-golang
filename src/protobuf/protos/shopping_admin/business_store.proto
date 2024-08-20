@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "build/shopping_admin";
+import "protos/global/global.proto";
+
+message BusinessStore {
+  // 删除状态
+  bool delStatus = 1;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 2;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 3;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 4;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 5;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message BusinessStoreParam {
+}
+
+message BusinessStoreIds {
+  repeated string id = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message BusinessStorePageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  BusinessStoreParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message BusinessStoreResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  BusinessStore detail = 3;  // 详情
+  repeated BusinessStore list = 4;  // 列表
+}
+
+// 业务实现
+service BusinessStoreService {
+  // 新增
+  rpc Create(BusinessStore) returns (BusinessStoreResponse);
+
+  // 修改
+  rpc Update(BusinessStore) returns (BusinessStoreResponse);
+
+  // 删除
+  rpc Delete(BusinessStoreIds) returns (BusinessStoreResponse);
+
+  // 查询 详情
+  rpc FindById(BusinessStoreIds) returns (BusinessStoreResponse);
+
+  // 查询 分页
+  rpc FindPageList(BusinessStorePageAuthQuery) returns (BusinessStoreResponse);
+}
+
+// type BusinessStore struct {
+// 	cmodel.BaseModel
+// 	// 门店id
+// 	StoreId string `gorm:"primary_key;<-:create" json:"storeId"`
+// 	// 商家id
+// 	BusinessId string `gorm:"<-:update" validate:"required" json:"businessId"`
+// 	// 平台id
+// 	PlatformId string `validate:"required" json:"platformId"`
+// 	// 平台id
+// 	Name string `validate:"required" json:"name"`
+// 	// 联系电话
+// 	Mobile string `validate:"required" json:"mobile"`
+// 	// 门店地址
+// 	Address string `validate:"required" json:"address"`
+// 	// 门店地址
+// 	DetailedAddress string `json:"detailedAddress"`
+// 	// 周几营业( 0:不 1:营业)
+// 	Week string `validate:"required" json:"week"`
+// 	// 开始时间
+// 	StartTime cmodel.LocalDate `validate:"required" json:"startTime"`
+// 	// 打样时间
+// 	EndTime cmodel.LocalDate `validate:"required" json:"endTime"`
+// 	// 营业时间(json格式)
+// 	BusinessHours string `validate:"required" json:"businessHours"`
+// 	// 状态(0:禁用[默认] 1:启用)
+// 	Status int `validate:"required" json:"status"`
+// 	// 纬度
+// 	Lat string `validate:"required" json:"lat"`
+// 	// 经度
+// 	Lng string `validate:"required" json:"lng"`
+// 	// 省
+// 	Province string `validate:"required" json:"province"`
+// 	// 市
+// 	City string `validate:"required" json:"city"`
+// 	// 区
+// 	County string `validate:"required" json:"county"`
+// 	// 是否展示(1:展示[默认] 0不展示)
+// 	IsDisplay int `json:"isDisplay"`
+// 	// 评分
+// 	Score float64 `json:"storeScore"`
+// 	// 人均评分
+// 	PerCapital string `json:"perCapital"`
+// 	// 门店logo
+// 	Logo string `json:"logo"`
+// 	// 视频链接地址
+// 	VideoUrl string `json:"videoUrl"`
+// 	// 视频封面图地址
+// 	VideoCoverUrl string `json:"videoCoverUrl"`
+// 	// 标签
+// 	Label string `json:"label"`
+// 	// 社群id
+// 	AssociationId string `json:"associationId"`
+// 	// 介绍
+// 	Introduce string `json:"introduce"`
+// 	// 门店分享标题
+// 	ShareTitle string `json:"shareTitle"`
+// 	// 门店分享图片
+// 	ShareImage string `json:"shareImage"`
+// 	// 优惠信息
+// 	DiscountInfo string `json:"discountInfo"`
+// 	// 所属代理商ID
+// 	Aid string `json:"aid"`
+// 	// 门店详情
+// 	Content string `json:"content"`
+// 	// 门店类型(1:普通门店[默认] 2:外卖门店)
+// 	Type int `json:"type"`
+// 	// 起送价
+// 	StartPrice float64 `json:"startPrice"`
+// 	// 配送是否自动跳转（不弹框）；1：是；2：否
+// 	isAutoTips int `json:"isAutoTips"`
+// 	// 抖音POI
+// 	PoiId string `json:"poiId"`
+// 	// 服务商POI（用户自定义）
+// 	serverPoiId string `json:"serverPoiId"`
+// 	// 合作协议路径
+// 	contractPath string `json:"contractPath"`
+// 	// 行业资质
+// 	IndustryQualification string `json:"industryQualification"`
+// 	// 到期时间戳
+// 	ExpireTime cmodel.LocalDate `json:"expireTime"`
+// 	// 营业执照路径
+// 	LicenseUrl string `json:"licenseUrl"`
+// 	// 合伙人id
+// 	Cid string `json:"cid"`
+// 	// poi匹配店铺任务id
+// 	PoiTaskTd string `json:"poiTaskTd"`
+// 	// 匹配状态，0-等待匹配，1-正在匹配，2-匹配成功，3-匹配失败
+// 	PoiMatchStatus string `json:"poiMatchStatus"`
+// 	// 哒哒门店编号
+// 	ShopNo string `json:"shopNo"`
+// 	// 哒哒门店所属城市
+// 	CityCode string `json:"cityCode"`
+// 	// 抖音门店类型
+// 	PoiType int `json:"poiType"`
+// 	// 排序
+// 	sortBy int64 `json:"sortBy"`
+// }

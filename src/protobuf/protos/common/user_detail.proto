@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "build/common";
+
+// 用户详细信息
+message UserDetail {
+  // 用户id
+  string userId = 1;  // @gotags: gorm:"primary_key;<-:create"
+  // 用户余额
+  double balance = 2;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 性别(1:男 2:女 3:未知）
+  int64 gender = 3;  // @gotags: gorm:"<-"
+  // 真实姓名
+  string realName = 4;  // @gotags: gorm:"<-" validate:"required"
+  // 微信昵称
+  string nickName = 5;  // @gotags: gorm:"<-" validate:"required"
+  // 身份证号码
+  string idCard = 6;  // @gotags: gorm:"<-" validate:"required"
+  // 所在省
+  string province = 7;  // @gotags: gorm:"<-"
+  // 所在市
+  string city = 8;  // @gotags: gorm:"<-"
+  // 备注
+  string mark = 9;  // @gotags: gorm:"<-"
+  // 头像
+  string avatar = 10;  // @gotags: gorm:"<-"
+  // 手机号码
+  string phone = 11;  // @gotags: gorm:"<-"
+  // 用户状态(0:为正常[默认]，1:禁用)
+  int64 status = 12;  // @gotags: gorm:"<-"
+  // 详细地址
+  string address = 13;  // @gotags: gorm:"<-"
+  // 用户类型
+  string userType = 14;  // @gotags: gorm:"<-"
+  // 用户登陆类型(h5,wechat,routine)
+  string loginType = 15;  // @gotags: gorm:"<-"
+  // 会员来源(0: 购买商品升级   1：花钱购买的会员2: 会员卡领取)
+  int64 isMoneyLevel = 16;  // @gotags: gorm:"<-"
+  // 是否永久性会员(0:非永久会员 1:永久会员)
+  int64 isEverLevel = 17;  // @gotags: gorm:"<-"
+  // 经度
+  string lon = 18;  // @gotags: gorm:"<-"
+  // 纬度
+  string lat = 19;  // @gotags: gorm:"<-"
+  // 生日
+  string birthDay = 20;  // @gotags: gorm:"->"
+  // 支付密码
+  string payPwd = 21;  // @gotags: gorm:"->"
+  // 加密盐
+  string salt = 22;  // @gotags: gorm:"<-"
+  // 邮箱
+  string email = 23;  // @gotags: gorm:"<-"
+}
+
+// BaseUserDetail 维护基本信息
+message BaseUserDetail {
+  // 真实姓名
+  string realName = 1;  // @gotags validate:"required" gorm:"<-"
+  // 电话号码
+  string phone = 2;  // @gotags validate:"required" gorm:"<-"
+  // 邮箱
+  string email = 3;  // @gotags gorm:"<-"
+}
+
+// 用户id集合
+message UserDetailIds {
+  // 用户id
+  repeated string userId = 1;
+}
+
+// 用户列表
+message UserDetailListVo {
+  // 用户id
+  string userId = 1;  // @gotags: gorm:"primary_key;<-:create" validate:"required"`
+  // 用户余额
+  double balance = 2;  // @gotags: gorm:"-"
+  // 性别(1:男 2:女 3:未知）
+  int64 gender = 3;  // @gotags: gorm:"<-"
+  // 真实姓名
+  string realName = 4;
+  // 微信昵称
+  string nickName = 5;
+  // 身份证号码
+  string idCard = 6;
+  // 所在省
+  string province = 7;
+  // 所在市
+  string city = 8;
+  // 备注
+  string mark = 9;
+  // 头像
+  string avatar = 10;
+  // 手机号码
+  string phone = 11;
+  // 用户状态(0:为正常[默认]，1:禁用)
+  int64 status = 12;
+  // 详细地址
+  string address = 13;
+  // 用户类型
+  string userType = 14;
+  // 用户登陆类型(h5,wechat,routine)
+  string loginType = 15;
+  // 会员来源(0: 购买商品升级   1：花钱购买的会员2: 会员卡领取)
+  int64 isMoneyLevel = 16;
+  // 是否永久性会员(0:非永久会员 1:永久会员)
+  int64 isEverLevel = 17;
+  // 经度
+  string lon = 18;
+  // 纬度
+  string lat = 19;
+  // 生日
+  string birthday = 20;
+}
+
+// 更新用户支付密码
+message PaymentPassword {
+  // 支付密码
+  string payPwd = 1;
+  // 加密盐
+  string salt = 2;
+  // 用户id
+  string userId = 3;
+}
+
+// 用户余额
+message UserBalance {
+  // 用户余额
+  string Balance = 1;
+  // 用户id
+  string userId = 3;
+}
+
+// 用户数据
+message UserDetailResponse {
+  // 数据量
+  int64 count = 1;
+  // 错误信息
+  string Msg = 2;
+  // 详情
+  UserDetail detail = 3;
+  // 列表
+  repeated UserDetailListVo list = 4;
+  // 用户余额
+  UserBalance UserBalance = 5;
+}
+
+service UserDetailService {
+  // 新增用户基础信息
+  rpc Create(UserDetail) returns (UserDetailResponse);
+
+  // 修改用户基础信息
+  rpc Update(UserDetail) returns (UserDetailResponse);
+
+  // 查询用户基础信息
+  rpc FindById(UserDetailIds) returns (UserDetailResponse);
+
+  // 查询用户余额
+  rpc FindBalanceByUserId(UserDetailIds) returns (UserDetailResponse);
+
+  // 查询用户余额
+  rpc UpdateBalanceByUserId(UserBalance) returns (UserDetailResponse);
+
+  // 设置支付密码
+  rpc UpdatePaymentPassword(PaymentPassword) returns (UserDetailResponse);
+}

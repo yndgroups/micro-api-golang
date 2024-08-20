@@ -1,0 +1,1 @@
+swag init -d ./,../../core/model,../../core/req,../../core/resp,../../protobuffer/build/shopping_client

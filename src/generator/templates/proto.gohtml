@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package {{.packageName}};
+
+option go_package = "build/{{.packageName}}";
+import "protos/global/global.proto";
+
+message {{.modelName}} {
+{{range $i, $v := .list}}{{ if eq $i 0 }}    // {{$v.Comment}}{{else}}
+    // {{$v.Comment}}{{end}}
+    {{$v.Type}} {{$v.Field}} = {{$i | index}};{{end}}
+}
+
+// 业务实现
+service {{.modelName}}Service {
+
+  // 新增
+  rpc Create ({{.modelName}}) returns ({{.modelName}}Response);
+
+  // 修改
+  rpc Update ({{.modelName}}) returns ({{.modelName}}Response);
+
+  // 删除
+  rpc Delete ({{.modelName}}Ids) returns ({{.modelName}}Response);
+
+  // 查询 详情
+  rpc FindById ({{.modelName}}Ids) returns ({{.modelName}}Response);
+
+  // 查询 分页
+  rpc FindPageList ({{.modelName}}PageAuthQuery) returns ({{.modelName}}Response);
+
+}

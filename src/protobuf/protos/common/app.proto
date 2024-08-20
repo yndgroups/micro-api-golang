@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message App {
+  // 应用id
+  string appId = 1;  // @gotags: `gorm:"primary_key;<-:create"`
+  // 应用名称[必传参数] true
+  string name = 2;  // @gotags: `valid:"required"`
+  // 应用图标
+  string icon = 3;
+  // 应用介绍
+  string introduce = 4;
+  // 模块id [必传参数]
+  string mdId = 5;
+  // 排序
+  int64 sortBy = 6;
+  // 启用状态（0:启用 1：禁用）
+  int64 status = 7;  // @gotags: `minimum:"1" maximum:"2" default:"1"  json:""`
+  // 删除状态
+  bool delStatus = 8;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 9;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 10;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 11;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 12;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message AppParam {
+  // 应用名称
+  string name = 1;
+  // 应用介绍
+  string introduce = 2;
+}
+
+message AppListVo {
+  string appId = 1;
+  // 应用名称[必传参数] true
+  string name = 2;
+  // 应用图标
+  string icon = 3;
+  // 应用介绍
+  string introduce = 4;
+}
+
+message AppIds {
+  repeated string appIds = 1;
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message AppPageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;  // @gotags: validate:"required,min=1" example:"1"`
+  // 分页长度
+  int64 pageSize = 2;  // @gotags: validate:"required,min=10,max=100" example:"10"`
+  // 查询参数
+  AppParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message AppResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  App detail = 3;  // 详情
+  repeated App list = 4;  // 列表
+}
+
+// 业务实现
+service AppService {
+  // 新增应用
+  rpc Create(App) returns (AppResponse);
+
+  // 修改应用
+  rpc Update(App) returns (AppResponse);
+
+  // 查询应用
+  rpc Delete(AppIds) returns (AppResponse);
+
+  // 查询应用详情
+  rpc FindById(AppIds) returns (AppResponse);
+
+  // 查询应用分页
+  rpc FindList(global.Auth) returns (AppResponse);
+
+  // 查询应用分页
+  rpc FindPageList(AppPageAuthQuery) returns (AppResponse);
+}

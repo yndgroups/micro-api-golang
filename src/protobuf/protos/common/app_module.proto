@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "build/common";
+import "protos/global/global.proto";
+
+message AppModule {
+  // 模块id
+  string MdId = 1;
+  // 模块名称
+  string name = 2;
+  // 主机地址
+  string host = 3;
+  // 路由前缀匹配
+  string matchPath = 4;
+  // js静态资源地址
+  string jsPath = 5;
+  // css静态资源地址
+  string cssPath = 6;
+  // 删除状态
+  bool delStatus = 7;  // @gotags: gorm:"-" swaggerignore:"true" minimum:"0" maximum:"1" default:"0"
+  // 创建人
+  string createBy = 8;  // @gotags: gorm:"->;<-:create" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 修改人
+  string updateBy = 9;  // @gotags: gorm:"->;<-:update" swaggerignore:"true" minLength:"6" maxLength:"19"
+  // 创建时间
+  string createTime = 10;  // @gotags: gorm:"->" swaggerignore:"true"
+  // 修改时间
+  string updateTime = 11;  // @gotags: gorm:"->" swaggerignore:"true"
+}
+
+message AppModuleParam {
+}
+
+message AppModuleIds {
+  // 模块id
+  repeated string mdIds = 1;
+  // 用户ID
+  string userId = 2;
+}
+
+// 分页查询加权参数
+message AppModulePageAuthQuery {
+  // 分页索引
+  int64 pageIndex = 1;
+  // 分页长度
+  int64 pageSize = 2;
+  // 查询参数
+  AppModuleParam params = 3;
+  // 用户登录授权信息
+  global.Auth auth = 4;  // @gotags: swaggerignore:"true"`
+}
+
+// 返回结果
+message AppModuleResponse {
+  int64 count = 1;  // 获取数据数量
+  string Msg = 2;  // 错误信息
+  AppModule detail = 3;  // 详情
+  repeated AppModule list = 4;  // 列表
+}
+
+// 业务实现
+service AppModuleService {
+    
+  // 新增应用模块
+  rpc Create(AppModule) returns (AppModuleResponse);
+
+  // 修改应用模块
+  rpc Update(AppModule) returns (AppModuleResponse);
+
+  // 删除应用模块
+  rpc Delete(AppModuleIds) returns (AppModuleResponse);
+
+  // 查询应用模块详情
+  rpc FindById(AppModuleIds) returns (AppModuleResponse);
+
+  // 查询应用模块分页
+  rpc FindPageList(AppModulePageAuthQuery) returns (AppModuleResponse);
+
+}

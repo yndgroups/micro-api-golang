@@ -1,0 +1,19 @@
+### VS Code ###
+.vscode/
+.idea/
+/.idea/
+
+### go env ###
+bin/
+/bin/
+pkg/
+/pkg/
+
+### 忽略临时文件夹目录 ###
+src/**/vendor/
+src/**/**/tmp/
+src/**/**/tmp/**
+
+src/proxy/
+/src/proxy/**
+gopls
