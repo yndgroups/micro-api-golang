@@ -10,6 +10,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 
 go get -u -v github.com/swaggo/swag/cmd/swag
 ```
+
 - `生成命令`
 ```
 swag init -d ./,../../core/cmodel,../../core/resp,../../protobuffer/build --exclude ./mapper/,../../core/pager,../../core/validate
