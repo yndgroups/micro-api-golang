@@ -83,7 +83,20 @@ fresh
     README.md
 ```
 
-# 代理设置
+
+## 代理设置
+
+## 环境变量设置
+```
+# 环境变量
+export GOROOT=/home/soft/go
+export PATH=$PATH:$GOROOT/bin
+
+# 工作目录
+export GOPATH=/home/work/you-project-name
+export PATH=$PATH:$GOPATH/bin
+```
+
 - File > Settings > Go > Go Modules
   在 Environment 输入如下
 ``` 
